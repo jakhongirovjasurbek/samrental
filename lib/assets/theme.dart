@@ -7,6 +7,11 @@ sealed class AppTheme {
         fontFamily: 'SF Pro Display',
         scaffoldBackgroundColor: scaffoldBackgroundColor,
         textTheme: const TextTheme(
+          headlineLarge: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: white,
+          ),
           headlineMedium: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w700,

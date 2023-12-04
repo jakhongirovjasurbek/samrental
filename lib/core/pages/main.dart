@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:samrental/assets/colors.dart';
 import 'package:samrental/assets/icons.dart';
+import 'package:samrental/features/cars/presentation/cars_screen.dart';
+import 'package:samrental/features/home/presentation/home_screen.dart';
 
 import '../widgets/navigation_item.dart';
 
@@ -81,10 +83,12 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       body: PageView(
+        allowImplicitScrolling: true,
+        physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         children: const [
-          SizedBox(),
-          SizedBox(),
+          HomeScreen(),
+          CarsScreen(),
         ],
       ),
     );

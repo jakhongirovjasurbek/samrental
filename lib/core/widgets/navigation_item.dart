@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:samrental/core/widgets/w_scale.dart';
 
 import '../../assets/colors.dart';
 
@@ -29,7 +30,6 @@ class _NavigationItemState extends State<NavigationItem> {
   @override
   void initState() {
     widget.controller.addListener(() {
-      print("Changed to ${widget.controller.page!}");
       if (pageIndex != widget.controller.page!.toInt()) {
         setState(() {
           pageIndex = widget.controller.page!.toInt();
@@ -41,9 +41,8 @@ class _NavigationItemState extends State<NavigationItem> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return WScale(
       onTap: widget.onTap,
-      behavior: HitTestBehavior.opaque,
       child: Container(
         width: double.maxFinite,
         height: double.maxFinite,

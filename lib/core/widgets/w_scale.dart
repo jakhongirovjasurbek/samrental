@@ -26,7 +26,7 @@ class _WScaleState extends State<WScale> with SingleTickerProviderStateMixin {
       duration: const Duration(milliseconds: 250),
     );
 
-    scale = Tween<double>(begin: 1.0, end: 0.98).animate(animationController);
+    scale = Tween<double>(begin: 1.0, end: 0.95).animate(animationController);
     super.initState();
   }
 
