@@ -53,6 +53,9 @@ class _NavigationItemState extends State<NavigationItem> {
           children: [
             SvgPicture.asset(
               widget.icon,
+              color: pageIndex == widget.id
+                  ? bodySmallTextColor
+                  : inactiveNavigationItemTextColor,
               theme: SvgTheme(
                 currentColor: pageIndex == widget.id
                     ? bodySmallTextColor
