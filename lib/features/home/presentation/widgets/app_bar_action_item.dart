@@ -7,9 +7,11 @@ import '../../../../core/widgets/w_scale.dart';
 class AppBarActionItem extends StatelessWidget {
   final VoidCallback onTap;
   final String icon;
+  final Color? backgroundColor;
   const AppBarActionItem({
     required this.onTap,
     required this.icon,
+    this.backgroundColor,
     Key? key,
   }) : super(key: key);
 
@@ -23,6 +25,7 @@ class AppBarActionItem extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
+          color: backgroundColor,
           border: Border.all(
             width: 1,
             color: borderColor,

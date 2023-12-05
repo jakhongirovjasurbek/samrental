@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:samrental/core/widgets/w_scale.dart';
 
+import '../../assets/colors.dart';
+
 class WButton extends StatelessWidget {
   final Widget? child;
   final VoidCallback onTap;
@@ -9,6 +11,7 @@ class WButton extends StatelessWidget {
   final TextStyle? textStyle;
   final double? width;
   final double? height;
+  final Color? color;
   const WButton({
     required this.onTap,
     this.child,
@@ -16,6 +19,7 @@ class WButton extends StatelessWidget {
     this.textStyle,
     this.width,
     this.height,
+    this.color,
     super.key,
   });
 
@@ -29,6 +33,7 @@ class WButton extends StatelessWidget {
             height: height ?? 48,
             alignment: Alignment.center,
             decoration: BoxDecoration(
+              color: color ?? buttonBackgroundColor,
               borderRadius: BorderRadius.circular(11),
             ),
             child: Text(
