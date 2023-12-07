@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../assets/colors.dart';
 import '../../../assets/icons.dart';
@@ -23,10 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(86),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(86),
           child: Padding(
-            padding: const EdgeInsets.only(top: 22, bottom: 16),
+            padding: EdgeInsets.only(top: 22, bottom: 16),
             child: AppBarContent(),
           ),
         ),
@@ -101,13 +104,49 @@ class AppBarContent extends StatelessWidget {
         const Spacer(),
         AppBarActionItem(
           backgroundColor: actionItemBackgroundColor,
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (sheetContext) {
+                return CupertinoActionSheet(
+                  actions: [
+                    CupertinoActionSheetAction(
+                      onPressed: () async {
+                        try {
+                          await launchUrl(
+                            Uri(scheme: 'tel', path: '+998 90 000 00 01'),
+                          );
+                        } on PlatformException catch (exception) {
+                          print(exception);
+                        }
+                      },
+                      child: Text(
+                        '+998 90 000 00 01',
+                        
+                      ),
+                    ),
+                  ],
+                  cancelButton: CupertinoActionSheetAction(
+                    onPressed: () {
+                      Navigator.of(sheetContext).pop();
+                    },
+                    child: Text(
+                      'Cancel',
+                    ),
+                  ),
+                );
+              },
+            );
+          },
           icon: AppIcons.phone,
         ),
         const Gap(12),
         AppBarActionItem(
           backgroundColor: actionItemBackgroundColor,
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed('/notifications');
+          },
           icon: AppIcons.notification,
         ),
         const Gap(7),

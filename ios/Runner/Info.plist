@@ -49,5 +49,12 @@
 		<array>
 			<string>en</string>
 		</array>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>http</string>
+			<string>sms</string>
+			<string>https</string>
+			<string>tel</string>
+		</array>
 	</dict>
 </plist>
