@@ -48,9 +48,9 @@ class CompanyItem extends StatelessWidget {
               child: Row(
                 children: [
                   SvgPicture.asset(AppIcons.location),
-                  const Gap(4),
+                  const Gap(8),
                   Text(
-                    'Landmark Platan\nrestaurant',
+                    'Landmark Platan restaurant',
                     style: Theme.of(context).textTheme.bodyLarge,
                   )
                 ],
@@ -69,7 +69,7 @@ class CompanyItem extends StatelessWidget {
               child: Row(
                 children: [
                   SvgPicture.asset(AppIcons.phoneSmall),
-                  const Gap(4),
+                  const Gap(8),
                   Text(
                     '+998 (90) 271 55 45',
                     style: Theme.of(context).textTheme.bodyLarge,

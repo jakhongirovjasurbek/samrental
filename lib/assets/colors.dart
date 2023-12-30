@@ -12,6 +12,9 @@ const borderColor = _whitish;
 const companyLogoBorderColor = _solid;
 const logoBackground = _background;
 const textFieldBorderColor = _cF0F0F4;
+const systemBlue = _c007AFF;
+const labelColor = Color(0xFF3C3C43);
+const tentiary = Color(0xFF767680);
 
 /// Color palatte:
 const _white = Color(0XFFFFFFFF);
@@ -26,3 +29,4 @@ const _whitish = Color(0xFFD2D2D9);
 const _solid = Color(0xFFEBEBEB);
 const _background = Color(0xFFFAFAFA);
 const _cF0F0F4 = Color(0xFFF0F0F4);
+const _c007AFF = Color(0xFF007AFF);

@@ -1,13 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:samrental/assets/icons.dart';
+import 'package:samrental/core/extentions/theme.dart';
 import 'package:samrental/core/widgets/w_scale.dart';
-import 'package:samrental/features/home/presentation/home_screen.dart';
-import 'package:samrental/features/home/presentation/widgets/actual_machine_list.dart';
+import 'package:samrental/features/home/presentation/widgets/actual_machine_item.dart';
 
 import '../../../assets/colors.dart';
+import '../../../generated/locale_keys.g.dart';
+import '../../home/presentation/bloc/home/home_bloc.dart';
+import '../../home/presentation/widgets/app_bar_content.dart';
 
 class CarsScreen extends StatefulWidget {
   const CarsScreen({super.key});
@@ -67,8 +72,9 @@ class _CarsScreenState extends State<CarsScreen> {
                               SvgPicture.asset(AppIcons.filter),
                               const Gap(6),
                               Text(
-                                'Filter',
-                                style: Theme.of(context).textTheme.titleLarge,
+                                LocaleKeys.filter.tr(),
+                                style:
+                                    context.textStyle.fontSize16FontWeight500,
                               ),
                               const Spacer(),
                               SvgPicture.asset(AppIcons.rightArrow),
@@ -82,14 +88,20 @@ class _CarsScreenState extends State<CarsScreen> {
               ),
             ),
           ],
-          body: ListView.separated(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            padding: const EdgeInsets.only(top: 12, bottom: 50),
-            itemBuilder: (_, index) => const ActualMachineList(),
-            separatorBuilder: (_, __) => const Gap(12),
-            itemCount: 5,
+          body: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return ListView.separated(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                padding: const EdgeInsets.only(top: 12, bottom: 50),
+                itemBuilder: (_, index) => ActualMachineItem(
+                  car: state.cars[index],
+                ),
+                separatorBuilder: (_, __) => const Gap(12),
+                itemCount: state.cars.length,
+              );
+            },
           ),
         ),
       ),

@@ -38,7 +38,10 @@ class _HomeCarouselState extends State<HomeCarousel> {
         children: [
           PageView(
             controller: controller,
-            children: List.generate(4, (index) => const CarouselItem()),
+            children: List.generate(
+              4,
+              (index) => const CarouselItem(),
+            ),
           ),
           Positioned(
             left: 28,

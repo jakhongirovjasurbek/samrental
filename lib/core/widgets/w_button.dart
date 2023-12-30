@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:samrental/core/extentions/theme.dart';
 
 import 'package:samrental/core/widgets/w_scale.dart';
 
@@ -27,20 +29,22 @@ class WButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return WScale(
       onTap: onTap,
-      child: child ??
-          Container(
-            width: width ?? double.maxFinite,
-            height: height ?? 48,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color ?? buttonBackgroundColor,
-              borderRadius: BorderRadius.circular(11),
+      child: Container(
+        width: width ?? double.maxFinite,
+        height: height ?? 48,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: color ?? buttonBackgroundColor,
+          borderRadius: BorderRadius.circular(11),
+        ),
+        child: child ??
+            Text(
+              text.tr(),
+              style: textStyle ??
+                  context.textStyle.fontSize15FontWeight600
+                      .copyWith(color: white),
             ),
-            child: Text(
-              text,
-              style: textStyle ?? Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
+      ),
     );
   }
 }

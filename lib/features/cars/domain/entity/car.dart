@@ -1,0 +1,3 @@
+class SingleCarEntity {
+  const SingleCarEntity();
+}

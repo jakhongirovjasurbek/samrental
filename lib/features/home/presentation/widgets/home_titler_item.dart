@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:samrental/core/extentions/theme.dart';
 
 import '../../../../assets/icons.dart';
 import '../../../../core/widgets/w_scale.dart';
@@ -27,8 +29,8 @@ class HomeTitlerItem extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            title,
-            style: Theme.of(context).textTheme.headlineMedium,
+            title.tr(),
+            style: context.textStyle.fontSize22FontWeight700,
           ),
           const Spacer(),
           if (!excludeArrowButton)

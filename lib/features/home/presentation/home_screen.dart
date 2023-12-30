@@ -1,21 +1,29 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'package:samrental/core/extentions/theme.dart';
+import 'package:samrental/features/home/presentation/bloc/home/home_bloc.dart';
 
 import '../../../assets/colors.dart';
 import '../../../assets/icons.dart';
 import '../../../core/widgets/w_scale.dart';
-import 'widgets/actual_machine_list.dart';
-import 'widgets/app_bar_action_item.dart';
+import '../../../generated/locale_keys.g.dart';
+import 'widgets/actual_machine_item.dart';
+import 'widgets/app_bar_content.dart';
 import 'widgets/company_info.dart';
 import 'widgets/home_carousel.dart';
 import 'widgets/home_titler_item.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final PageController pageController;
+  const HomeScreen({
+    required this.pageController,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -41,23 +49,54 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const HomeCarousel(),
             const Gap(4),
-            HomeTitlerItem(title: 'Companies', onTap: () {}),
+            HomeTitlerItem(
+              title: LocaleKeys.companies,
+              onTap: () {},
+              excludeArrowButton: true,
+            ),
             const CompanyItem(),
             HomeTitlerItem(
               onTap: () {},
-              title: 'Actual machines',
+              title: LocaleKeys.actual_machines,
               excludeArrowButton: true,
             ),
-            ...List.generate(
-              3,
-              (index) => const Padding(
-                padding: EdgeInsets.symmetric(vertical: 6),
-                child: ActualMachineList(),
-              ),
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state.status == LoadingStatus.pure) {
+                  context.read<HomeBloc>().add(
+                        HomeStarted(
+                          onFailure: (errorMessage) {},
+                        ),
+                      );
+                  return const Align(child: CupertinoActivityIndicator());
+                } else if (state.status == LoadingStatus.loading) {
+                  return const Align(child: CupertinoActivityIndicator());
+                } else if (state.status == LoadingStatus.loadedWithSuccess) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                      state.cars.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: ActualMachineItem(car: state.cars[index]),
+                      ),
+                    ),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
             Align(
               child: WScale(
-                onTap: () {},
+                onTap: () {
+                  widget.pageController.animateToPage(
+                    1,
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
@@ -65,8 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'All cars ',
-                        style: Theme.of(context).textTheme.labelLarge,
+                        LocaleKeys.all_cars.tr(),
+                        style:
+                            context.textStyle.fontSize17FontWeight500.copyWith(
+                          color: buttonBackgroundColor,
+                        ),
                       ),
                       const Gap(4),
                       SvgPicture.asset(
@@ -81,76 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class AppBarContent extends StatelessWidget {
-  final Color? actionItemBackgroundColor;
-  const AppBarContent({
-    this.actionItemBackgroundColor,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Gap(16),
-        Text(
-          'Sam Rental',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const Spacer(),
-        AppBarActionItem(
-          backgroundColor: actionItemBackgroundColor,
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              backgroundColor: Colors.transparent,
-              builder: (sheetContext) {
-                return CupertinoActionSheet(
-                  actions: [
-                    CupertinoActionSheetAction(
-                      onPressed: () async {
-                        try {
-                          await launchUrl(
-                            Uri(scheme: 'tel', path: '+998 90 000 00 01'),
-                          );
-                        } on PlatformException catch (exception) {
-                          print(exception);
-                        }
-                      },
-                      child: Text(
-                        '+998 90 000 00 01',
-                        
-                      ),
-                    ),
-                  ],
-                  cancelButton: CupertinoActionSheetAction(
-                    onPressed: () {
-                      Navigator.of(sheetContext).pop();
-                    },
-                    child: Text(
-                      'Cancel',
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-          icon: AppIcons.phone,
-        ),
-        const Gap(12),
-        AppBarActionItem(
-          backgroundColor: actionItemBackgroundColor,
-          onTap: () {
-            Navigator.of(context).pushNamed('/notifications');
-          },
-          icon: AppIcons.notification,
-        ),
-        const Gap(7),
-      ],
     );
   }
 }

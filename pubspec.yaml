@@ -23,12 +23,19 @@ dependencies:
   shared_preferences: ^2.2.2
   get_it: ^7.6.4
   url_launcher: ^6.2.1
+  dio: ^5.4.0
+  equatable: ^2.0.5
+  cached_network_image: ^3.3.0
+  internet_connection_checker_plus: ^2.1.0
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.7
 
 flutter:
 
@@ -44,12 +51,31 @@ flutter:
   fonts:
     - family: "SF Pro Display"
       fonts:
-        - asset: assets/fonts/SF-Pro-Display-Regular.OTF
-        - asset: assets/fonts/SF-Pro-Display-Medium.OTF
-        - asset: assets/fonts/SF-Pro-Display-Thin-Italic.OTF
-        - asset: assets/fonts/SF-Pro-Display-Black-Italic.OTF
-        - asset: assets/fonts/SF-Pro-Display-Bold.OTF
-        - asset: assets/fonts/SF-Pro-Display-Heavy-Italic.OTF
-        - asset: assets/fonts/SF-Pro-Display-Light-Italic.OTF
-        - asset: assets/fonts/SF-Pro-Display-SemiBold-Italic.OTF
+        - asset: assets/fonts/SF-Pro-Display-Black.ttf
+        - asset: assets/fonts/SF-Pro-Display-BlackItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Bold.ttf
+        - asset: assets/fonts/SF-Pro-Display-BoldItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Heavy.ttf
+        - asset: assets/fonts/SF-Pro-Display-HeavyItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Light.ttf
+        - asset: assets/fonts/SF-Pro-Display-LightItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Medium.ttf
+        - asset: assets/fonts/SF-Pro-Display-MediumItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Regular.ttf
+        - asset: assets/fonts/SF-Pro-Display-RegularItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-SemiBold.ttf
+        - asset: assets/fonts/SF-Pro-Display-SemiBoldItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Thin.ttf
+        - asset: assets/fonts/SF-Pro-Display-ThinItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Ultralight.ttf
+        - asset: assets/fonts/SF-Pro-Display-UltralightItalic.ttf
+
+        # - asset: assets/fonts/SF-Pro-Display-Regular.OTF
+        # - asset: assets/fonts/SF-Pro-Display-Medium.OTF
+        # - asset: assets/fonts/SF-Pro-Display-Thin-Italic.OTF
+        # - asset: assets/fonts/SF-Pro-Display-Black-Italic.OTF
+        # - asset: assets/fonts/SF-Pro-Display-Bold.OTF
+        # - asset: assets/fonts/SF-Pro-Display-Heavy-Italic.OTF
+        # - asset: assets/fonts/SF-Pro-Display-Light-Italic.OTF
+        # - asset: assets/fonts/SF-Pro-Display-SemiBold-Italic.OTF
   

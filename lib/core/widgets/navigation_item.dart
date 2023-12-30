@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -63,7 +64,7 @@ class _NavigationItemState extends State<NavigationItem> {
             ),
             const Gap(7),
             Text(
-              widget.title,
+              widget.title.tr(),
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: pageIndex == widget.id
                         ? bodySmallTextColor

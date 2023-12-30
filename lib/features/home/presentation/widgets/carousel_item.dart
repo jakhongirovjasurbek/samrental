@@ -1,6 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:samrental/assets/colors.dart';
+import 'package:samrental/core/extentions/theme.dart';
 
 import '../../../../assets/icons.dart';
+import '../../../../generated/locale_keys.g.dart';
 
 class CarouselItem extends StatelessWidget {
   const CarouselItem({super.key});
@@ -20,9 +24,14 @@ class CarouselItem extends StatelessWidget {
           Positioned(
             top: 16,
             left: 16,
+            right: 100,
             child: Text(
-              'You can give a car\nfor rent with efficient\noptimization',
-              style: Theme.of(context).textTheme.headlineLarge,
+              LocaleKeys.slide_one_description.tr(),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: context.textStyle.fontSize24FontWeight600.copyWith(
+                color: white,
+              ),
             ),
           ),
           Positioned(

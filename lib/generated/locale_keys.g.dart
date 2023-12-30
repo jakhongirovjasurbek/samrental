@@ -1,0 +1,59 @@
+// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+
+abstract class  LocaleKeys {
+  static const sam_rental = 'sam_rental';
+  static const slide_one_description = 'slide_one_description';
+  static const my_reservations = 'my_reservations';
+  static const companies = 'companies';
+  static const actual_machines = 'actual_machines';
+  static const sum_day = 'sum_day';
+  static const details = 'details';
+  static const reserve = 'reserve';
+  static const all_cars = 'all_cars';
+  static const home = 'home';
+  static const cars = 'cars';
+  static const cancel = 'cancel';
+  static const filter = 'filter';
+  static const rent_date = 'rent_date';
+  static const save = 'save';
+  static const places_count = 'places_count';
+  static const baggage_count = 'baggage_count';
+  static const gasoil = 'gasoil';
+  static const conditioner = 'conditioner';
+  static const no_conditioner = 'no_conditioner';
+  static const km_per_hour = 'km_per_hour';
+  static const tinting = 'tinting';
+  static const no_tinting = 'no_tinting';
+  static const gas = 'gas';
+  static const details_uppercase = 'details_uppercase';
+  static const call = 'call';
+  static const rental_terms = 'rental_terms';
+  static const insurance = 'insurance';
+  static const owner = 'owner';
+  static const included = 'included';
+  static const back = 'back';
+  static const booking_car = 'booking_car';
+  static const rental_period = 'rental_period';
+  static const personal_details = 'personal_details';
+  static const full_name = 'full_name';
+  static const phone_number = 'phone_number';
+  static const payment_method = 'payment_method';
+  static const cash = 'cash';
+  static const credit_card = 'credit_card';
+  static const receipt_method = 'receipt_method';
+  static const select = 'select';
+  static const pickup = 'pickup';
+  static const delivery = 'delivery';
+  static const delivery_info = 'delivery_info';
+  static const successful_reservation = 'successful_reservation';
+  static const successful_reservation_detail = 'successful_reservation_detail';
+  static const notifications = 'notifications';
+  static const read_all = 'read_all';
+  static const hours_age = 'hours_age';
+  static const server_exception = 'server_exception';
+  static const internal_error = 'internal_error';
+  static const no_internet_exception = 'no_internet_exception';
+  static const failure = 'failure';
+  static const sum_h = 'sum_h';
+
+}
