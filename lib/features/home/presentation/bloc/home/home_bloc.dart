@@ -15,6 +15,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       : super(const HomeState(
           status: LoadingStatus.pure,
           cars: [],
+          allCars: [],
         )) {
     on<HomeStarted>((event, emit) async {
       emit(state.copyWith(status: LoadingStatus.pure));
@@ -35,6 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           emit(state.copyWith(
             status: LoadingStatus.loadedWithSuccess,
             cars: cars,
+            allCars: cars,
           ));
         },
       );
