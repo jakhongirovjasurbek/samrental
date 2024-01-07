@@ -55,5 +55,7 @@ abstract class  LocaleKeys {
   static const no_internet_exception = 'no_internet_exception';
   static const failure = 'failure';
   static const sum_h = 'sum_h';
+  static const total = 'total';
+  static const sum = 'sum';
 
 }

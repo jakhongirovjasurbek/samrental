@@ -16,3 +16,52 @@ class SingleCarStarted extends SingleCarEvent {
     required this.onFailure,
   });
 }
+
+class ReserveCar extends SingleCarEvent {
+  final DateTime? startingDate;
+  final DateTime? endingDate;
+  final String fullName;
+  final String phoneNumber;
+  final bool? isCash;
+  final bool isPickup;
+  final double latitude;
+  final double longitude;
+  final VoidCallback onSuccess;
+  final ValueChanged<String> onFailure;
+  final int totalCost;
+  const ReserveCar({
+    required this.startingDate,
+    required this.endingDate,
+    required this.fullName,
+    required this.phoneNumber,
+    required this.isCash,
+    required this.isPickup,
+    required this.latitude,
+    required this.longitude,
+    required this.totalCost,
+    required this.onFailure,
+    required this.onSuccess,
+  });
+}
+
+class SingleCarGetCurrentLocationEvent extends SingleCarEvent {
+  final YandexMapController mapController;
+  final VoidCallback onSuccess;
+  final ValueChanged<String> onFailure;
+
+  const SingleCarGetCurrentLocationEvent({
+    required this.mapController,
+    required this.onSuccess,
+    required this.onFailure,
+  });
+}
+
+class SingleCarGetSelectedLocation extends SingleCarEvent {
+  final double latitude;
+  final double longitude;
+
+  const SingleCarGetSelectedLocation({
+    required this.latitude,
+    required this.longitude,
+  });
+}

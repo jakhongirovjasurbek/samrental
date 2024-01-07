@@ -21,4 +21,9 @@ sealed class AppIcons {
   static const audi = 'assets/images/audi.png';
   static const car = 'assets/images/car.png';
   static const logo = 'assets/images/logo.png';
+  static const iosArrowLeft = 'assets/icons/ios_left_arrow.svg';
+  static const calendar = 'assets/icons/calendar.svg';
+  static const checked = 'assets/icons/checked.svg';
+  static const download = 'assets/icons/download.svg';
+  static const payme = 'assets/icons/payme.svg';
 }

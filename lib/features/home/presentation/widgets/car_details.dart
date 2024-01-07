@@ -310,7 +310,6 @@ class CarDetails extends StatelessWidget {
         ),
         Container(
           width: double.maxFinite,
-          // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
           decoration: BoxDecoration(
             color: white,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
@@ -361,7 +360,6 @@ class CarDetails extends StatelessWidget {
                     child: WButton(
                       onTap: () {},
                       color: tentiary.withOpacity(.12),
-                      text: LocaleKeys.reserve,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -381,7 +379,12 @@ class CarDetails extends StatelessWidget {
                   const Gap(8),
                   Expanded(
                     child: WButton(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          '/reserve',
+                          arguments: widget.car.id,
+                        );
+                      },
                       text: LocaleKeys.reserve,
                     ),
                   ),

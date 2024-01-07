@@ -15,7 +15,9 @@ const textFieldBorderColor = _cF0F0F4;
 const systemBlue = _c007AFF;
 const labelColor = Color(0xFF3C3C43);
 const tentiary = Color(0xFF767680);
-
+const cFFAA01 = Color(0xFFFFAA01);
+const cF8F9FB = Color(0xFFF8F9FB);
+const c8B8B8C = Color(0xFF8B8B8C);
 /// Color palatte:
 const _white = Color(0XFFFFFFFF);
 const _black = Color(0xFF000000);

@@ -20,10 +20,7 @@ import '../../../../generated/locale_keys.g.dart';
 
 class ActualMachineItem extends StatefulWidget {
   final CarEntity car;
-  const ActualMachineItem({
-    required this.car,
-    super.key,
-  });
+  const ActualMachineItem({required this.car, super.key});
 
   @override
   State<ActualMachineItem> createState() => _ActualMachineItemState();
@@ -49,10 +46,7 @@ class _ActualMachineItemState extends State<ActualMachineItem> {
             color: white,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
-              BoxShadow(
-                color: black.withOpacity(.05),
-                blurRadius: 4,
-              ),
+              BoxShadow(color: black.withOpacity(.05), blurRadius: 4),
             ],
           ),
           child: Column(
@@ -180,7 +174,12 @@ class _ActualMachineItemState extends State<ActualMachineItem> {
                         const Gap(6),
                         Expanded(
                           child: WButton(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                '/reserve',
+                                arguments: widget.car.id,
+                              );
+                            },
                             text: LocaleKeys.reserve,
                           ),
                         ),

@@ -14,7 +14,7 @@ class CodegenLoader extends AssetLoader{
     return Future.value(mapLocales[locale.toString()]);
   }
 
-  static const Map<String,dynamic> en = {
+  static const Map<String,dynamic> ru = {
   "sam_rental": "Sam Rental",
   "slide_one_description": "You can give a car for rent with efficient optimization",
   "my_reservations": "My reservations",
@@ -68,9 +68,11 @@ class CodegenLoader extends AssetLoader{
   "internal_error": "Something went wrong. Please, try again.",
   "no_internet_exception": "Please, check your internet connection",
   "failure": "Sorry, process failed to complete this task",
-  "sum_h": "{} sum/h"
+  "sum_h": "{} sum/h",
+  "total": "Total",
+  "sum": "sum"
 };
-static const Map<String,dynamic> ru = {
+static const Map<String,dynamic> en = {
   "sam_rental": "Sam Rental",
   "slide_one_description": "You can give a car for rent with efficient optimization",
   "my_reservations": "My reservations",
@@ -124,7 +126,9 @@ static const Map<String,dynamic> ru = {
   "internal_error": "Something went wrong. Please, try again.",
   "no_internet_exception": "Please, check your internet connection",
   "failure": "Sorry, process failed to complete this task",
-  "sum_h": "{} sum/h"
+  "sum_h": "{} sum/h",
+  "total": "Total",
+  "sum": "sum"
 };
 static const Map<String,dynamic> uz = {
   "sam_rental": "Sam Rental",
@@ -180,7 +184,9 @@ static const Map<String,dynamic> uz = {
   "internal_error": "Something went wrong. Please, try again.",
   "no_internet_exception": "Please, check your internet connection",
   "failure": "Sorry, process failed to complete this task",
-  "sum_h": "{} sum/h"
+  "sum_h": "{} sum/h",
+  "total": "Total",
+  "sum": "sum"
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ru": ru, "uz": uz};
+static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "en": en, "uz": uz};
 }

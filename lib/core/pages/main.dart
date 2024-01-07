@@ -47,9 +47,9 @@ class _MainPageState extends State<MainPage> {
       },
       child: Scaffold(
         bottomNavigationBar: Container(
-          height: 62,
+          height: 62 + MediaQuery.of(context).padding.bottom,
           width: double.maxFinite,
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+          padding:  EdgeInsets.fromLTRB(8,8,8,8 + MediaQuery.of(context).padding.bottom),
           decoration: BoxDecoration(
             color: white,
             border: const Border(

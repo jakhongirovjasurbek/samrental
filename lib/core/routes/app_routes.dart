@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:samrental/core/pages/main.dart';
+import 'package:samrental/features/cars/presentation/pages/reserve.dart';
 import 'package:samrental/features/home/presentation/pages/notifications.dart';
 
 sealed class AppRoutes {
@@ -9,9 +10,11 @@ sealed class AppRoutes {
         return fade(const MainPage());
       case '/notifications':
         return fade(const NotificationsPage());
-
+      case '/reserve':
+        final carId = settings.arguments as String;
+        return fade(ReservePage(id: carId));
       default:
-        return fade(const Scaffold());
+        return fade(Scaffold(appBar: AppBar()));
     }
   }
 }
