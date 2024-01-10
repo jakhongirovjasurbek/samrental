@@ -98,7 +98,7 @@ class _WDatePickerState extends State<WDatePicker> {
             Expanded(
               child: Text(
                 widget.initialDateTime == null
-                    ? 'Select date'
+                    ? LocaleKeys.select_date.tr()
                     : '${widget.initialDateTime!.day}/${widget.initialDateTime!.month}/${widget.initialDateTime!.year}',
                 style: context.textStyle.fontSize17FontWeight500,
               ),

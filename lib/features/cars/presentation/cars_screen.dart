@@ -56,7 +56,11 @@ class _CarsScreenState extends State<CarsScreen> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8.5, 10, 8.5, 16),
                       child: WScale(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            '/filter',
+                          );
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(

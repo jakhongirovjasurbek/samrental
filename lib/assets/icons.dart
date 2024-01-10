@@ -6,6 +6,7 @@ sealed class AppIcons {
   static const location = 'assets/icons/location.svg';
   static const filter = 'assets/icons/filter.svg';
   static const notification = 'assets/icons/notification.svg';
+  static const language = 'assets/icons/language.svg';
   static const rightArrow = 'assets/icons/right_arrow.svg';
   static const bag = 'assets/icons/bag.svg';
   static const call = 'assets/icons/call.svg';

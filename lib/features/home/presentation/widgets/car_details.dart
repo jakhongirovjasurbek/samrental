@@ -324,7 +324,9 @@ class CarDetails extends StatelessWidget {
             children: [
               CarDocsItem(
                 title: LocaleKeys.rental_terms,
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed('/rental_terms');
+                },
               ),
               Container(
                 width: double.maxFinite,

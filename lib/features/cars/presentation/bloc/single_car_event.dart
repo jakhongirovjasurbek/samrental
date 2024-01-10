@@ -29,6 +29,7 @@ class ReserveCar extends SingleCarEvent {
   final VoidCallback onSuccess;
   final ValueChanged<String> onFailure;
   final int totalCost;
+
   const ReserveCar({
     required this.startingDate,
     required this.endingDate,
@@ -64,4 +65,24 @@ class SingleCarGetSelectedLocation extends SingleCarEvent {
     required this.latitude,
     required this.longitude,
   });
+}
+
+class ChangeMapViewEvent extends SingleCarEvent {
+  const ChangeMapViewEvent({
+    required this.mapType,
+  });
+
+  final MapType mapType;
+}
+
+class ZoomInMapEvent extends SingleCarEvent {
+  const ZoomInMapEvent();
+}
+
+class ZoomOutMapEvent extends SingleCarEvent {
+  const ZoomOutMapEvent();
+}
+
+class FindMyCurrentLocationEvent extends SingleCarEvent {
+  const FindMyCurrentLocationEvent();
 }

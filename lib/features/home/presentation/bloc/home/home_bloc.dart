@@ -8,6 +8,7 @@ import 'package:samrental/features/home/domain/entites/car.dart';
 import 'package:samrental/features/home/domain/usecases/get_news.dart';
 
 part 'home_event.dart';
+
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -40,6 +41,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ));
         },
       );
+    });
+
+    on<UpdateCarsEvent>((event, emit) {
+      final bool status = !(state.filterStatus ?? false);
+      emit(state.copyWith(
+        cars: event.cars,
+        filterStatus: status,
+      ));
     });
   }
 }

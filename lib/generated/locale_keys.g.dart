@@ -42,6 +42,7 @@ abstract class  LocaleKeys {
   static const credit_card = 'credit_card';
   static const receipt_method = 'receipt_method';
   static const select = 'select';
+  static const select_date = 'select_date';
   static const pickup = 'pickup';
   static const delivery = 'delivery';
   static const delivery_info = 'delivery_info';
@@ -57,5 +58,10 @@ abstract class  LocaleKeys {
   static const sum_h = 'sum_h';
   static const total = 'total';
   static const sum = 'sum';
+  static const language = 'language';
+  static const allTypes = 'allTypes';
+  static const standard = 'standard';
+  static const comfort = 'comfort';
+  static const business = 'business';
 
 }

@@ -40,6 +40,7 @@
     "credit_card": "Credit card",
     "receipt_method": "Receipt method",
     "select": "Select",
+    "select_date": "Select date",
     "pickup": "Pickup",
     "delivery": "Delivery",
     "delivery_info": "There is a separate charge for delivery",
@@ -53,6 +54,11 @@
     "no_internet_exception": "Please, check your internet connection",
     "failure": "Sorry, process failed to complete this task",
     "sum_h": "{} sum/h",
-    "total":"Total",
-    "sum": "sum"
+    "total": "Total",
+    "sum": "sum",
+    "language": "Language",
+    "allTypes": "All",
+    "standard": "Standard",
+    "comfort": "Comfort",
+    "business": "Business"
 }
