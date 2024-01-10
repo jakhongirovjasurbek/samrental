@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:samrental/core/extentions/theme.dart';
 import 'package:samrental/features/home/presentation/widgets/app_bar_action_item.dart';
+import 'package:samrental/features/home/presentation/widgets/change_language_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../assets/colors.dart';
@@ -13,6 +14,7 @@ import '../../../../generated/locale_keys.g.dart';
 
 class AppBarContent extends StatelessWidget {
   final Color? actionItemBackgroundColor;
+
   const AppBarContent({
     this.actionItemBackgroundColor,
     super.key,
@@ -77,9 +79,16 @@ class AppBarContent extends StatelessWidget {
         AppBarActionItem(
           backgroundColor: actionItemBackgroundColor,
           onTap: () {
-            Navigator.of(context).pushNamed('/notifications');
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (btshContext) {
+                return const LanguageBottomSheet();
+              },
+            );
           },
-          icon: AppIcons.notification,
+          icon: AppIcons.language,
         ),
         const Gap(7),
       ],

@@ -31,7 +31,7 @@ class AppBarActionItem extends StatelessWidget {
             color: borderColor,
           ),
         ),
-        child: SvgPicture.asset(icon),
+        child: SvgPicture.asset(icon, color: black,),
       ),
     );
   }

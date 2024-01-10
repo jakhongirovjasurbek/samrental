@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
-
 import 'package:samrental/core/extentions/theme.dart';
+import 'package:samrental/core/functions/functions.dart';
+import 'package:samrental/features/cars/data/models/single_car.dart';
 import 'package:samrental/features/cars/presentation/widgets/reserve_app_bar.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../../../../assets/colors.dart';
 import '../../../../assets/icons.dart';
@@ -35,6 +36,7 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
   DateTime? endingPeriod;
   bool? isPickup;
   YandexMapController? controller;
+
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -262,7 +264,9 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
               children: [
                 CarDocsItem(
                   title: LocaleKeys.rental_terms,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/rental_terms');
+                  },
                 ),
                 Container(
                   width: double.maxFinite,
@@ -285,24 +289,28 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                   title: LocaleKeys.owner,
                   onTap: () {},
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 11,
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        LocaleKeys.total.tr(),
-                        style: context.textStyle.fontSize17FontWeight500,
+                BlocBuilder<SingleCarBloc, SingleCarState>(
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 11,
                       ),
-                      const Spacer(),
-                      Text(
-                        '8 538 000 ${LocaleKeys.sum.tr()}',
-                        style: context.textStyle.fontSize17FontWeight700,
-                      )
-                    ],
-                  ),
+                      child: Row(
+                        children: [
+                          Text(
+                            LocaleKeys.total.tr(),
+                            style: context.textStyle.fontSize17FontWeight500,
+                          ),
+                          const Spacer(),
+                          Text(
+                            '${formatPrice((state.singleCar as SingleCarModel).cost * ((endingPeriod?.day ?? 0) - (startingPeriod?.day ?? 0)))} ${LocaleKeys.sum.tr()}',
+                            style: context.textStyle.fontSize17FontWeight700,
+                          )
+                        ],
+                      ),
+                    );
+                  },
                 ),
                 const Gap(16),
                 Padding(
