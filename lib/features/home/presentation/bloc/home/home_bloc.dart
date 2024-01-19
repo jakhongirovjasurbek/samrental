@@ -7,6 +7,8 @@ import 'package:samrental/features/home/data/repositories/home_repository.dart';
 import 'package:samrental/features/home/domain/entites/car.dart';
 import 'package:samrental/features/home/domain/usecases/get_news.dart';
 
+import '../../../../../assets/constants/constants.dart';
+
 part 'home_event.dart';
 
 part 'home_state.dart';
@@ -17,6 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           status: LoadingStatus.pure,
           cars: [],
           allCars: [],
+          selectedTypes: Constants.types,
         )) {
     on<HomeStarted>((event, emit) async {
       emit(state.copyWith(status: LoadingStatus.pure));
@@ -43,12 +46,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
     });
 
-    on<UpdateCarsEvent>((event, emit) {
-      final bool status = !(state.filterStatus ?? false);
-      emit(state.copyWith(
-        cars: event.cars,
-        filterStatus: status,
-      ));
+    on<HomeUpdateCarsEvent>((event, emit) {
+      emit(
+        state.copyWith(
+          selectedTypes: [...event.selectedTypes],
+          cars: [
+            ...state.allCars
+                .where((element) => event.selectedTypes.contains(element.type)),
+          ],
+        ),
+      );
     });
   }
 }

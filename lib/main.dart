@@ -24,7 +24,6 @@ Future<void> main() async {
   /// Commands for running easy localization and generating code
   /// flutter pub run easy_localization:generate -o codegen_loader.g.dart -S lib/assets/strings
   /// flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S lib/assets/strings
-
   await EasyLocalization.ensureInitialized();
   runApp(EasyLocalization(
     supportedLocales: const [Locale('ru'), Locale('en'), Locale('uz')],

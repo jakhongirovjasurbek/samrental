@@ -2,6 +2,7 @@ part of 'single_car_bloc.dart';
 
 class SingleCarState extends Equatable {
   final LoadingStatus status;
+  final LoadingStatus reserveStatus;
   final SingleCarEntity singleCar;
   final YandexMapController? mapController;
   final MapAnimation? animation;
@@ -11,6 +12,7 @@ class SingleCarState extends Equatable {
 
   const SingleCarState({
     required this.status,
+    required this.reserveStatus,
     required this.singleCar,
     this.mapController,
     this.animation,
@@ -21,6 +23,7 @@ class SingleCarState extends Equatable {
 
   SingleCarState copyWith({
     LoadingStatus? status,
+    LoadingStatus? reserveStatus,
     SingleCarEntity? singleCar,
     YandexMapController? mapController,
     MapAnimation? animation,
@@ -30,6 +33,7 @@ class SingleCarState extends Equatable {
   }) {
     return SingleCarState(
       status: status ?? this.status,
+      reserveStatus: reserveStatus ?? this.reserveStatus,
       singleCar: singleCar ?? this.singleCar,
       mapController: mapController ?? this.mapController,
       animation: animation ?? this.animation,
@@ -48,5 +52,6 @@ class SingleCarState extends Equatable {
         latitude,
         longitude,
         mapType,
+        reserveStatus,
       ];
 }

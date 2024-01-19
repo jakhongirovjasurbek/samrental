@@ -30,6 +30,8 @@ dependencies:
   flutter_widget_from_html: ^0.14.11
   yandex_mapkit: ^3.4.0
   geolocator: ^10.1.0
+  flutter_launcher_icons: ^0.13.1
+  mask_text_input_formatter: ^2.8.0
 
 dev_dependencies:
   flutter_test:
@@ -73,12 +75,11 @@ flutter:
         - asset: assets/fonts/SF-Pro-Display-Ultralight.ttf
         - asset: assets/fonts/SF-Pro-Display-UltralightItalic.ttf
 
-        # - asset: assets/fonts/SF-Pro-Display-Regular.OTF
-        # - asset: assets/fonts/SF-Pro-Display-Medium.OTF
-        # - asset: assets/fonts/SF-Pro-Display-Thin-Italic.OTF
-        # - asset: assets/fonts/SF-Pro-Display-Black-Italic.OTF
-        # - asset: assets/fonts/SF-Pro-Display-Bold.OTF
-        # - asset: assets/fonts/SF-Pro-Display-Heavy-Italic.OTF
-        # - asset: assets/fonts/SF-Pro-Display-Light-Italic.OTF
-        # - asset: assets/fonts/SF-Pro-Display-SemiBold-Italic.OTF
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/png/icon.png"
+  min_sdk_android: 21
   

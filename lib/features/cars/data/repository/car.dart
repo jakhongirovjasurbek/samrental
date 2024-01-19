@@ -1,9 +1,11 @@
 import 'package:samrental/core/data/either.dart';
 import 'package:samrental/core/data/exception.dart';
 import 'package:samrental/core/data/failure.dart';
-import 'package:samrental/features/cars/data_source/car_remote.dart';
 import 'package:samrental/features/cars/domain/entity/car.dart';
+import 'package:samrental/features/cars/domain/entity/reserve.dart';
 import 'package:samrental/features/cars/domain/repository/car.dart';
+
+import '../data_source/car_remote.dart';
 
 class CarRepositoryImpl implements CarRepository {
   final CarRemoteDataSource remoteDataSource;
@@ -20,6 +22,16 @@ class CarRepositoryImpl implements CarRepository {
         failureMessage: exception.exceptionMessage,
         failureCode: exception.exceptionCode,
       ));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, void>> reserveCar(ReserveEntity reservation) async {
+    try {
+      final response = await remoteDataSource.reserveCar(reservation);
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(failureMessage: e.exceptionMessage, failureCode: e.exceptionCode));
     }
   }
 }

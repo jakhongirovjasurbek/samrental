@@ -18,8 +18,10 @@ class WDatePicker extends StatefulWidget {
   final DateTime? minimumDate;
   final DateTime? maximumDate;
   final ValueChanged<DateTime> onSavePressed;
+  final bool startingDate;
   const WDatePicker({
     required this.onSavePressed,
+    required this.startingDate,
     this.initialDateTime,
     this.minimumDate,
     this.maximumDate,
@@ -32,6 +34,12 @@ class WDatePicker extends StatefulWidget {
 
 class _WDatePickerState extends State<WDatePicker> {
   DateTime? dateTime;
+
+  @override
+  void initState() {
+    dateTime = widget.initialDateTime;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -61,8 +69,8 @@ class _WDatePickerState extends State<WDatePicker> {
                     },
                     mode: CupertinoDatePickerMode.date,
                     dateOrder: DatePickerDateOrder.dmy,
-                    initialDateTime: widget.initialDateTime,
-                    minimumDate: widget.minimumDate ?? DateTime.now(),
+                    initialDateTime: widget.startingDate ? dateTime : dateTime ?? widget.minimumDate,
+                    minimumDate: widget.minimumDate,
                     maximumDate: widget.maximumDate,
                   ),
                 ),
@@ -70,6 +78,13 @@ class _WDatePickerState extends State<WDatePicker> {
                   onTap: () {
                     if (dateTime != null) {
                       widget.onSavePressed(dateTime!);
+                    } else {
+                      if(widget.startingDate){
+                        widget.onSavePressed(DateTime.now());
+                      } else {
+                        widget.onSavePressed(widget.minimumDate ?? DateTime.now());
+
+                      }
                     }
                     Navigator.of(btshContext).pop();
                   },

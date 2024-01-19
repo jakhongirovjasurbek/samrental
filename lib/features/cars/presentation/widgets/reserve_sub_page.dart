@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:samrental/core/data/injector_container.dart';
 import 'package:samrental/core/extentions/theme.dart';
 import 'package:samrental/core/functions/functions.dart';
+import 'package:samrental/core/widgets/w_bottomsheet.dart';
 import 'package:samrental/features/cars/data/models/single_car.dart';
+import 'package:samrental/features/cars/presentation/pages/rental_terms.dart';
 import 'package:samrental/features/cars/presentation/widgets/reserve_app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../../../../assets/colors.dart';
+import '../../../../assets/constants/constants.dart';
 import '../../../../assets/icons.dart';
 import '../../../../core/widgets/w_button.dart';
 import '../../../../core/widgets/w_radio.dart';
@@ -56,6 +62,7 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
               children: [
                 WDatePicker(
                   initialDateTime: startingPeriod,
+                  startingDate: true,
                   maximumDate: endingPeriod,
                   onSavePressed: (value) {
                     setState(() {
@@ -66,12 +73,13 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                 const Gap(16),
                 WDatePicker(
                   initialDateTime: endingPeriod,
+                  startingDate: false,
                   onSavePressed: (value) {
                     setState(() {
                       endingPeriod = value;
                     });
                   },
-                  minimumDate: startingPeriod,
+                  minimumDate: startingPeriod?.add(const Duration(days: 1)),
                 ),
               ],
             ),
@@ -122,6 +130,14 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                   style: context.textStyle.fontSize17FontWeight400,
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    MaskTextInputFormatter(
+                      initialText: '',
+                      mask: '+### (##) ###-##-##',
+                      filter: {"#": RegExp(r'[0-9]')},
+                      type: MaskAutoCompletionType.lazy,
+                    )
+                  ],
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: logoBackground,
@@ -200,13 +216,16 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
               onTap: () {
                 showModalBottomSheet(
                   context: context,
+                  isDismissible: false,
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
+                  enableDrag: false,
                   builder: (btshContext) {
                     return BlocProvider.value(
                       value: context.read<SingleCarBloc>(),
                       child: ReceiptMethodBottomSheet(
                         isPickup: isPickup,
+                        isCash: isCash,
                         onSave: (value) {
                           setState(() {
                             isPickup = value;
@@ -226,7 +245,7 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                   children: [
                     Expanded(
                       child: Text(
-                        LocaleKeys.pickup.tr(),
+                        LocaleKeys.receipt_method.tr(),
                         style: context.textStyle.fontSize17FontWeight400,
                       ),
                     ),
@@ -268,17 +287,17 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                     Navigator.of(context).pushNamed('/rental_terms');
                   },
                 ),
-                Container(
-                  width: double.maxFinite,
-                  height: 1,
-                  margin: const EdgeInsets.only(left: 16),
-                  color: scaffoldBackgroundColor,
-                ),
-                CarDocsItem(
-                  onTap: () {},
-                  title: LocaleKeys.insurance,
-                  isIncluded: true,
-                ),
+                // Container(
+                //   width: double.maxFinite,
+                //   height: 1,
+                //   margin: const EdgeInsets.only(left: 16),
+                //   color: scaffoldBackgroundColor,
+                // ),
+                // CarDocsItem(
+                //   onTap: () {},
+                //   title: LocaleKeys.insurance,
+                //   isIncluded: true,
+                // ),
                 Container(
                   width: double.maxFinite,
                   height: 1,
@@ -287,7 +306,9 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                 ),
                 CarDocsItem(
                   title: LocaleKeys.owner,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/owner');
+                  },
                 ),
                 BlocBuilder<SingleCarBloc, SingleCarState>(
                   builder: (context, state) {
@@ -303,10 +324,16 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                             style: context.textStyle.fontSize17FontWeight500,
                           ),
                           const Spacer(),
-                          Text(
-                            '${formatPrice((state.singleCar as SingleCarModel).cost * ((endingPeriod?.day ?? 0) - (startingPeriod?.day ?? 0)))} ${LocaleKeys.sum.tr()}',
-                            style: context.textStyle.fontSize17FontWeight700,
-                          )
+                          if (startingPeriod != null && endingPeriod != null)
+                            Text(
+                              '${formatPrice((state.singleCar as SingleCarModel).cost * (endingPeriod!.difference(startingPeriod!).inDays))} ${LocaleKeys.sum.tr()}',
+                              style: context.textStyle.fontSize17FontWeight700,
+                            )
+                          else
+                            Text(
+                              '${formatPrice(0)} ${LocaleKeys.sum.tr()}',
+                              style: context.textStyle.fontSize17FontWeight700,
+                            )
                         ],
                       ),
                     );
@@ -315,9 +342,99 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                 const Gap(16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: WButton(
-                    onTap: () {},
-                    text: LocaleKeys.reserve,
+                  child: BlocBuilder<SingleCarBloc, SingleCarState>(
+                    builder: (context, state) {
+                      return WButton(
+                        onTap: () {
+                          if (serviceLocator<SharedPreferences>()
+                                  .getBool('terms_accepted') ==
+                              true) {
+                            validate(state);
+                          } else {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              useRootNavigator: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (btshContext) {
+                                return WBottomSheet(
+                                  // isScrollable: true,
+                                  children: [
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.8,
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: ListView(
+                                              children: [
+                                                Text(
+                                                  LocaleKeys.rental_terms.tr(),
+                                                  style: context.textStyle
+                                                      .fontSize24FontWeight700,
+                                                ),
+                                                const Gap(16),
+                                                Text(
+                                                  Constants.rentalTerms,
+                                                  style: context.textStyle
+                                                      .fontSize15FontWeight500,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const Gap(16),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: WButton(
+                                                  color: const Color(0xFF767680)
+                                                      .withOpacity(.12),
+                                                  textStyle: context.textStyle
+                                                      .fontSize17FontWeight400
+                                                      .copyWith(
+                                                          color:
+                                                              headlineMediumTextColor
+                                                                  .withOpacity(
+                                                    .6,
+                                                  )),
+                                                  onTap: () {
+                                                    Navigator.of(btshContext)
+                                                        .pop();
+                                                  },
+                                                  text: LocaleKeys.cancel,
+                                                ),
+                                              ),
+                                              const Gap(16),
+                                              Expanded(
+                                                child: WButton(
+                                                  onTap: () async {
+                                                    await serviceLocator<
+                                                            SharedPreferences>()
+                                                        .setBool(
+                                                            'terms_accepted',
+                                                            true);
+                                                    Navigator.of(btshContext)
+                                                        .pop();
+                                                    validate(state);
+                                                  },
+                                                  text: LocaleKeys.accept,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        },
+                        text: LocaleKeys.reserve,
+                      );
+                    },
                   ),
                 ),
                 const Gap(16),
@@ -327,5 +444,96 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
         ],
       ),
     );
+  }
+
+  void validate(SingleCarState state) {
+    if (startingPeriod == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(LocaleKeys.starting_date_validation.tr()),
+        ),
+      );
+      return;
+    }
+
+    if (endingPeriod == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(LocaleKeys.ending_date_validation.tr()),
+        ),
+      );
+      return;
+    }
+
+    if (fullNameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(LocaleKeys.full_name_validation.tr()),
+        ),
+      );
+      return;
+    }
+
+    final phoneNumber = MaskTextInputFormatter(
+      initialText: phoneNumberController.text,
+      mask: '+### (##) ###-##-##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy,
+    ).getUnmaskedText();
+
+    if (phoneNumber.isEmpty || phoneNumber.length != 12) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(LocaleKeys.phone_validation.tr()),
+        ),
+      );
+      return;
+    }
+
+    if (isCash == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(LocaleKeys.payment_validation.tr()),
+        ),
+      );
+      return;
+    }
+
+    if (isPickup == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            LocaleKeys.pickup_validation.tr(),
+          ),
+        ),
+      );
+      return;
+    }
+    context.read<SingleCarBloc>().add(SingleCarReserveCarEvent(
+          startingDate: startingPeriod,
+          endingDate: endingPeriod,
+          fullName: fullNameController.text,
+          phoneNumber: phoneNumber,
+          isCash: isCash,
+          isPickup: isPickup!,
+          latitude: state.latitude ?? 0,
+          longitude: state.longitude ?? 0,
+          totalCost: (state.singleCar as SingleCarModel).cost *
+              (endingPeriod!.difference(startingPeriod!).inDays),
+          onFailure: (errorMessage) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(errorMessage)),
+            );
+          },
+          onSuccess: () {
+            Navigator.of(context).pushReplacementNamed('/success');
+          },
+        ));
   }
 }

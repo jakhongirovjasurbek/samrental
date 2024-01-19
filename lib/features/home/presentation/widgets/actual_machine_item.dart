@@ -20,6 +20,7 @@ import '../../../../generated/locale_keys.g.dart';
 
 class ActualMachineItem extends StatefulWidget {
   final CarEntity car;
+
   const ActualMachineItem({required this.car, super.key});
 
   @override
@@ -154,9 +155,7 @@ class _ActualMachineItemState extends State<ActualMachineItem> {
                                     value: context.read<SingleCarBloc>(),
                                     child: Builder(
                                       builder: (context) {
-                                        return CarDetails(
-                                            pageController: pageController,
-                                            widget: widget);
+                                        return CarDetails(widget: widget);
                                       },
                                     ),
                                   );

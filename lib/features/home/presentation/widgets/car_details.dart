@@ -21,16 +21,20 @@ import '../bloc/home/home_bloc.dart';
 import 'actual_machine_item.dart';
 import 'car_details_item.dart';
 
-class CarDetails extends StatelessWidget {
+class CarDetails extends StatefulWidget {
   const CarDetails({
     super.key,
-    required this.pageController,
     required this.widget,
   });
 
-  final PageController pageController;
   final ActualMachineItem widget;
 
+  @override
+  State<CarDetails> createState() => _CarDetailsState();
+}
+
+class _CarDetailsState extends State<CarDetails> {
+  final pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return WBottomSheet(
@@ -54,9 +58,13 @@ class CarDetails extends StatelessWidget {
             SizedBox(
               height: 296,
               child: PageView(
+
+                onPageChanged: (_){
+                  setState((){});
+                },
                 controller: pageController,
                 children: List.generate(
-                  widget.car.images.length,
+                  widget.widget.car.images.length,
                   (index) => Container(
                     height: 296,
                     width: double.maxFinite,
@@ -65,7 +73,7 @@ class CarDetails extends StatelessWidget {
                     ),
                     child: CachedNetworkImage(
                       imageUrl:
-                          '${Constants.imageBaseUrl}/${widget.car.images[index]}',
+                          '${Constants.imageBaseUrl}/${widget.widget.car.images[index]}',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -79,7 +87,7 @@ class CarDetails extends StatelessWidget {
               child: Align(
                 child: SmoothPageIndicator(
                   controller: pageController,
-                  count: widget.car.images.length,
+                  count: widget.widget.car.images.length,
                   effect: JumpingDotEffect(
                     dotWidth: 8,
                     dotHeight: 8,
@@ -96,7 +104,7 @@ class CarDetails extends StatelessWidget {
           builder: (context, state) {
             if (state.status == LoadingStatus.pure) {
               context.read<SingleCarBloc>().add(SingleCarStarted(
-                    id: widget.car.id,
+                    id: widget.widget.car.id,
                     onFailure: (message) {},
                   ));
               return const SizedBox();
@@ -146,22 +154,22 @@ class CarDetails extends StatelessWidget {
                             color: labelColor.withOpacity(.6),
                           ),
                         ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: buttonBackgroundColor,
-                          ),
-                          child: Text(
-                            'New',
-                            style: context.textStyle.fontSize11FontWeight600
-                                .copyWith(color: white),
-                          ),
-                        )
+                        // const Spacer(),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(
+                        //     horizontal: 10,
+                        //     vertical: 6,
+                        //   ),
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(50),
+                        //     color: buttonBackgroundColor,
+                        //   ),
+                        //   child: Text(
+                        //     'New',
+                        //     style: context.textStyle.fontSize11FontWeight600
+                        //         .copyWith(color: white),
+                        //   ),
+                        // )
                       ]),
                       const Gap(12),
                       Row(
@@ -328,17 +336,17 @@ class CarDetails extends StatelessWidget {
                   Navigator.of(context).pushNamed('/rental_terms');
                 },
               ),
-              Container(
-                width: double.maxFinite,
-                height: 1,
-                margin: const EdgeInsets.only(left: 16),
-                color: scaffoldBackgroundColor,
-              ),
-              CarDocsItem(
-                onTap: () {},
-                title: LocaleKeys.insurance,
-                isIncluded: true,
-              ),
+              // Container(
+              //   width: double.maxFinite,
+              //   height: 1,
+              //   margin: const EdgeInsets.only(left: 16),
+              //   color: scaffoldBackgroundColor,
+              // ),
+              // CarDocsItem(
+              //   onTap: () {},
+              //   title: LocaleKeys.insurance,
+              //   isIncluded: true,
+              // ),
               Container(
                 width: double.maxFinite,
                 height: 1,
@@ -347,13 +355,15 @@ class CarDetails extends StatelessWidget {
               ),
               CarDocsItem(
                 title: LocaleKeys.owner,
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed('/owner');
+                },
               ),
-              Container(
-                width: double.maxFinite,
-                height: 1,
-                color: scaffoldBackgroundColor,
-              ),
+              // Container(
+              //   width: double.maxFinite,
+              //   height: 1,
+              //   color: scaffoldBackgroundColor,
+              // ),
               const Gap(16),
               Row(
                 children: [
@@ -384,7 +394,7 @@ class CarDetails extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pushNamed(
                           '/reserve',
-                          arguments: widget.car.id,
+                          arguments: widget.widget.car.id,
                         );
                       },
                       text: LocaleKeys.reserve,
@@ -407,6 +417,12 @@ class CarDetails extends StatelessWidget {
     } else {
       return LocaleKeys.gas;
     }
+  }
+
+  @override
+  void dispose(){
+    pageController.dispose();
+    super.dispose();
   }
 }
 
@@ -453,4 +469,5 @@ class CarDocsItem extends StatelessWidget {
       ),
     );
   }
+
 }

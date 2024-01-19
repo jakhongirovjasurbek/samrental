@@ -20,8 +20,11 @@ sealed class AppIcons {
   static const speed = 'assets/icons/speed.svg';
   static const tinting = 'assets/icons/tinting.svg';
   static const audi = 'assets/images/audi.png';
+  static const iphone = 'assets/images/iphone.png';
+  static const hyundai = 'assets/images/hyundai.png';
   static const car = 'assets/images/car.png';
   static const logo = 'assets/images/logo.png';
+  static const logo2 = 'assets/images/logo_2.png';
   static const iosArrowLeft = 'assets/icons/ios_left_arrow.svg';
   static const calendar = 'assets/icons/calendar.svg';
   static const checked = 'assets/icons/checked.svg';

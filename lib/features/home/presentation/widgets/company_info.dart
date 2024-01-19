@@ -6,7 +6,10 @@ import '../../../../assets/colors.dart';
 import '../../../../assets/icons.dart';
 
 class CompanyItem extends StatelessWidget {
+  final bool isOwnerNameIncluded;
+
   const CompanyItem({
+    this.isOwnerNameIncluded = false,
     super.key,
   });
 
@@ -31,6 +34,7 @@ class CompanyItem extends StatelessWidget {
           children: [
             Container(
               height: 80,
+              padding: const EdgeInsets.all(20),
               width: double.maxFinite,
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -41,7 +45,7 @@ class CompanyItem extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Image.asset(AppIcons.logo),
+              child: Image.asset(AppIcons.logo2),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
@@ -56,6 +60,29 @@ class CompanyItem extends StatelessWidget {
                 ],
               ),
             ),
+            if (isOwnerNameIncluded) ...{
+              Container(
+                height: 1,
+                width: double.maxFinite,
+                margin: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  color: companyLogoBorderColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    // SvgPicture.asset(AppIcons.phoneSmall),
+                    const Gap(8),
+                    Text(
+                      'Sultonov Zafar',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    )
+                  ],
+                ),
+              ),
+            },
             Container(
               height: 1,
               width: double.maxFinite,

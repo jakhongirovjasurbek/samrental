@@ -15,11 +15,13 @@ import '../../../../core/widgets/w_radio.dart';
 
 class ReceiptMethodBottomSheet extends StatefulWidget {
   final bool? isPickup;
+  final bool? isCash;
   final ValueChanged<bool?> onSave;
 
   const ReceiptMethodBottomSheet({
     required this.onSave,
     required this.isPickup,
+    required this.isCash,
     super.key,
   });
 
@@ -52,35 +54,37 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
           },
           title: LocaleKeys.pickup,
         ),
-        Container(
-          width: double.maxFinite,
-          height: 1,
-          margin: const EdgeInsets.only(
-            left: 16,
-            top: 11,
-            bottom: 11,
+        if (widget.isCash != null && !widget.isCash!) ...{
+          Container(
+            width: double.maxFinite,
+            height: 1,
+            margin: const EdgeInsets.only(
+              left: 16,
+              top: 11,
+              bottom: 11,
+            ),
+            color: scaffoldBackgroundColor,
           ),
-          color: scaffoldBackgroundColor,
-        ),
-        WRadio(
-          isActive: isPickup == false,
-          onTap: () {
-            setState(() {
-              isPickup = false;
-            });
-          },
-          title: LocaleKeys.delivery,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 24),
-          child: Text(
-            LocaleKeys.delivery_info.tr(),
-            style: context.textStyle.fontSize13FontWeight400.copyWith(
-              color: labelColor.withOpacity(.3),
+          WRadio(
+            isActive: isPickup == false,
+            onTap: () {
+              setState(() {
+                isPickup = false;
+              });
+            },
+            title: LocaleKeys.delivery,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 24),
+            child: Text(
+              LocaleKeys.delivery_info.tr(),
+              style: context.textStyle.fontSize13FontWeight400.copyWith(
+                color: labelColor.withOpacity(.3),
+              ),
             ),
           ),
-        ),
-        const Gap(16),
+          const Gap(16),
+        },
         if (isPickup == false)
           Container(
             height: 310,
@@ -96,7 +100,8 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                   child: Stack(
                     children: [
                       YandexMap(
-                        nightModeEnabled: true,
+                        scrollGesturesEnabled: true,
+                        nightModeEnabled: false,
                         mapType: state.mapType,
                         onCameraPositionChanged: (
                           cameraPosition,
@@ -133,75 +138,73 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                       ),
 
                       /// Map type (Map, Satellite)
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 12, top: 12),
-                          child: Material(
-                            borderRadius: BorderRadius.circular(8),
-                            color: white.withOpacity(0.85),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    context.read<SingleCarBloc>().add(
-                                          const ChangeMapViewEvent(
-                                            mapType: MapType.map,
-                                          ),
-                                        );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Map',
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: state.mapType == MapType.map
-                                            ? FontWeight.w500
-                                            : FontWeight.w400,
-                                        color: state.mapType == MapType.map
-                                            ? black
-                                            : lightGrey,
-                                      ),
+                      Positioned(
+                        left: 12,
+                        top: 12,
+                        width: 100,
+                        height: 30,
+                        child: Material(
+                          borderRadius: BorderRadius.circular(8),
+                          color: white.withOpacity(0.85),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  context.read<SingleCarBloc>().add(
+                                        const ChangeMapViewEvent(
+                                          mapType: MapType.map,
+                                        ),
+                                      );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Map',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: state.mapType == MapType.map
+                                          ? FontWeight.w500
+                                          : FontWeight.w400,
+                                      color: state.mapType == MapType.map
+                                          ? black
+                                          : lightGrey,
                                     ),
                                   ),
                                 ),
-                                const Gap(8),
-                                Container(
-                                  height: 28,
-                                  width: 1,
-                                  color: grey,
-                                ),
-                                const Gap(8),
-                                GestureDetector(
-                                  onTap: () {
-                                    context.read<SingleCarBloc>().add(
-                                          const ChangeMapViewEvent(
-                                            mapType: MapType.satellite,
-                                          ),
-                                        );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Satellite',
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight:
-                                            state.mapType == MapType.satellite
-                                                ? FontWeight.w500
-                                                : FontWeight.w400,
-                                        color:
-                                            state.mapType == MapType.satellite
-                                                ? black
-                                                : lightGrey,
-                                      ),
+                              ),
+                              Container(
+                                height: 28,
+                                width: 1,
+                                color: grey,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  context.read<SingleCarBloc>().add(
+                                        const ChangeMapViewEvent(
+                                          mapType: MapType.satellite,
+                                        ),
+                                      );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Satellite',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight:
+                                          state.mapType == MapType.satellite
+                                              ? FontWeight.w500
+                                              : FontWeight.w400,
+                                      color:
+                                          state.mapType == MapType.satellite
+                                              ? black
+                                              : lightGrey,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

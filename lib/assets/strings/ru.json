@@ -1,6 +1,8 @@
 {
     "sam_rental": "Sam Rental",
-    "slide_one_description": "Вы можете сдать автомобиль в аренду с эффективной оптимизацией",
+    "slide_one_description": "Авто по запросу:\nваш личный ключ к удобству",
+    "slide_two_description": "Арендуйте авто\nв одно касание.",
+    "slide_three_description": "Мобильная аренда авто – \nваш быстрый путь\nк свободе",
     "my_reservations": "Мои бронирования",
     "companies": "Компании",
     "actual_machines": "Существующие машины",
@@ -30,6 +32,7 @@
     "owner": "Владелец",
     "included": "Включено",
     "back": "Назад",
+    "back_to_home": "Вернуться домой",
     "booking_car": "Бронирование автомобиля",
     "rental_period": "Срок аренды",
     "personal_details": "Личная информация",
@@ -57,8 +60,16 @@
     "total":"Общий",
     "sum": "сум",
     "language": "Язык",
-    "allTypes": "Все",
-    "standard": "Стандарт",
-    "comfort": "Комфорт",
-    "business": "Бизнес"
+    "all": "Все",
+    "start": "Start",
+    "standard": "Standart",
+    "comfort": "Premium",
+    "business": "Luxury",
+    "starting_date_validation": "Дата начала недействительна",
+    "ending_date_validation": "Дата окончания недействительна",
+    "full_name_validation": "Полное имя недействительно",
+    "phone_validation": "Номер телефона недействителен",
+    "payment_validation": "Способ оплаты не выбран",
+    "pickup_validation": "Метод получения не выбран",
+    "accept": "Принять"
 }

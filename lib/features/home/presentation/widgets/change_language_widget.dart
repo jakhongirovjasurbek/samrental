@@ -20,7 +20,7 @@ class LanguageBottomSheet extends StatelessWidget {
           flag: 'assets/png/flag_ru.png',
           lang: 'Русский',
         ),
-        const Gap(16),
+        // const Gap(16),
         SelectLangButton(
           onPressed: () {
             context.setLocale(const Locale('en'));
@@ -30,7 +30,7 @@ class LanguageBottomSheet extends StatelessWidget {
           flag: 'assets/png/flag_en.png',
           lang: 'English',
         ),
-        const Gap(16),
+        // const Gap(16),
         SelectLangButton(
           onPressed: () {
             context.setLocale(const Locale('uz'));

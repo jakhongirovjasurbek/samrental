@@ -17,7 +17,7 @@ class SingleCarStarted extends SingleCarEvent {
   });
 }
 
-class ReserveCar extends SingleCarEvent {
+class SingleCarReserveCarEvent extends SingleCarEvent {
   final DateTime? startingDate;
   final DateTime? endingDate;
   final String fullName;
@@ -30,7 +30,7 @@ class ReserveCar extends SingleCarEvent {
   final ValueChanged<String> onFailure;
   final int totalCost;
 
-  const ReserveCar({
+  const SingleCarReserveCarEvent({
     required this.startingDate,
     required this.endingDate,
     required this.fullName,

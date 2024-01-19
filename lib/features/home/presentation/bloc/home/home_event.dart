@@ -13,8 +13,8 @@ class HomeStarted extends HomeEvent {
   const HomeStarted({required this.onFailure});
 }
 
-class UpdateCarsEvent extends HomeEvent {
-  final List<CarEntity> cars;
+class HomeUpdateCarsEvent extends HomeEvent {
+  final List<String> selectedTypes;
 
-  const UpdateCarsEvent({required this.cars});
+  const HomeUpdateCarsEvent({required this.selectedTypes});
 }

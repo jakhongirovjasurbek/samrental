@@ -1,6 +1,8 @@
 {
     "sam_rental": "Sam Rental",
-    "slide_one_description": "You can give a car for rent with efficient optimization",
+    "slide_one_description": "You can give a car\nfor rent with efficient\noptimization",
+    "slide_two_description": "Rent a car in \none touch.",
+    "slide_three_description": "Mobile car rental is \nyour quick path \nto freedom",
     "my_reservations": "My reservations",
     "companies": "Companies",
     "actual_machines": "Actual machines",
@@ -30,6 +32,7 @@
     "owner": "Owner",
     "included": "Included",
     "back": "Back",
+    "back_to_home": "Back to Home",
     "booking_car": "Booking a car",
     "rental_period": "Rental period",
     "personal_details": "Personal details",
@@ -57,8 +60,16 @@
     "total": "Total",
     "sum": "sum",
     "language": "Language",
-    "allTypes": "All",
-    "standard": "Standard",
-    "comfort": "Comfort",
-    "business": "Business"
+    "all": "All",
+    "start": "Start",
+    "standard": "Standart",
+    "comfort": "Premium",
+    "business": "Luxury",
+    "starting_date_validation": "Starting date is not valid",
+    "ending_date_validation":  "Ending date is not valid",
+    "full_name_validation": "Full name is not valid",
+    "phone_validation": "Phone number is not valid",
+    "payment_validation": "Payment method is not selected",
+    "pickup_validation": "Receipt method is not selected",
+    "accept": "Accept"
 }

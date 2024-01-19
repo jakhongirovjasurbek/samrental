@@ -4,14 +4,18 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:samrental/core/data/injector_container.dart';
-import 'package:samrental/features/cars/domain/entity/car.dart';
-import 'package:samrental/features/cars/domain/usecase/get_single_car.dart';
-import 'package:samrental/features/home/presentation/bloc/home/home_bloc.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
-part 'single_car_event.dart';
+import 'package:samrental/core/data/injector_container.dart';
+import 'package:samrental/features/cars/domain/entity/car.dart';
+import 'package:samrental/features/cars/domain/entity/reserve.dart';
+import 'package:samrental/features/cars/domain/usecase/get_single_car.dart';
+import 'package:samrental/features/cars/domain/usecase/reserve_car.dart';
+import 'package:samrental/features/home/presentation/bloc/home/home_bloc.dart';
 
+import '../../data/models/single_car.dart';
+
+part 'single_car_event.dart';
 part 'single_car_state.dart';
 
 class SingleCarBloc extends Bloc<SingleCarEvent, SingleCarState> {
@@ -20,6 +24,7 @@ class SingleCarBloc extends Bloc<SingleCarEvent, SingleCarState> {
           const SingleCarState(
             status: LoadingStatus.pure,
             singleCar: SingleCarEntity(),
+            reserveStatus: LoadingStatus.pure,
           ),
         ) {
     on<SingleCarStarted>((event, emit) async {
@@ -90,7 +95,10 @@ class SingleCarBloc extends Bloc<SingleCarEvent, SingleCarState> {
     });
 
     on<SingleCarGetSelectedLocation>((event, emit) {
-      // TODO: implement event handler
+      emit(state.copyWith(
+        latitude: event.latitude,
+        longitude: event.longitude,
+      ));
     });
 
     on<ChangeMapViewEvent>((event, emit) {
@@ -130,6 +138,36 @@ class SingleCarBloc extends Bloc<SingleCarEvent, SingleCarState> {
           latitude: position.latitude,
           longitude: position.longitude,
         ),
+      );
+    });
+
+    on<SingleCarReserveCarEvent>((event, emit) async {
+      emit(state.copyWith(reserveStatus: LoadingStatus.loading));
+
+      final response = await serviceLocator<ReserveCarUseCase>().call(
+        ReserveEntity(
+          startingDate: event.startingDate!,
+          endingDate: event.endingDate!,
+          fullName: event.fullName,
+          phoneNumber: event.phoneNumber,
+          isCash: event.isCash!,
+          isPickup: event.isPickup,
+          latitude: state.latitude ?? 0,
+          longitude: state.longitude ?? 0,
+          carId: (state.singleCar as SingleCarModel).id,
+          totalCost: event.totalCost,
+        ),
+      );
+
+      response.either(
+        (failure) {
+          emit(state.copyWith(reserveStatus: LoadingStatus.loadedWithFailure));
+          event.onFailure(failure.failureMessage);
+        },
+        (_) {
+          emit(state.copyWith(reserveStatus: LoadingStatus.loadedWithSuccess));
+          event.onSuccess();
+        },
       );
     });
   }

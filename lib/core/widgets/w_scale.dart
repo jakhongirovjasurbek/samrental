@@ -55,4 +55,11 @@ class _WScaleState extends State<WScale> with SingleTickerProviderStateMixin {
           child: widget.child),
     );
   }
+
+  @override
+  void dispose() {
+    
+    animationController.dispose();
+    super.dispose();
+  }
 }

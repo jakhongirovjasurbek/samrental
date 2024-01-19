@@ -3,6 +3,8 @@
 abstract class  LocaleKeys {
   static const sam_rental = 'sam_rental';
   static const slide_one_description = 'slide_one_description';
+  static const slide_two_description = 'slide_two_description';
+  static const slide_three_description = 'slide_three_description';
   static const my_reservations = 'my_reservations';
   static const companies = 'companies';
   static const actual_machines = 'actual_machines';
@@ -32,6 +34,7 @@ abstract class  LocaleKeys {
   static const owner = 'owner';
   static const included = 'included';
   static const back = 'back';
+  static const back_to_home = 'back_to_home';
   static const booking_car = 'booking_car';
   static const rental_period = 'rental_period';
   static const personal_details = 'personal_details';
@@ -59,9 +62,17 @@ abstract class  LocaleKeys {
   static const total = 'total';
   static const sum = 'sum';
   static const language = 'language';
-  static const allTypes = 'allTypes';
+  static const all = 'all';
+  static const start = 'start';
   static const standard = 'standard';
   static const comfort = 'comfort';
   static const business = 'business';
+  static const starting_date_validation = 'starting_date_validation';
+  static const ending_date_validation = 'ending_date_validation';
+  static const full_name_validation = 'full_name_validation';
+  static const phone_validation = 'phone_validation';
+  static const payment_validation = 'payment_validation';
+  static const pickup_validation = 'pickup_validation';
+  static const accept = 'accept';
 
 }
