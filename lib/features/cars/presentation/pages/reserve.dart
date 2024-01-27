@@ -19,6 +19,7 @@ class ReservePage extends StatelessWidget {
         create: (context) => SingleCarBloc(),
         child: Builder(builder: (context) {
           return Scaffold(
+            
             body: BlocBuilder<SingleCarBloc, SingleCarState>(
               builder: (context, state) {
                 if (state.status == LoadingStatus.pure) {

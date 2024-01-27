@@ -1,14 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:samrental/assets/colors.dart';
-import 'package:samrental/core/extentions/theme.dart';
 import 'package:samrental/features/home/presentation/widgets/company_info.dart';
 
 import '../../../../assets/icons.dart';
 import '../../../../core/widgets/w_scale.dart';
-import '../../../../generated/locale_keys.g.dart';
 
 class OwnerPage extends StatelessWidget {
   const OwnerPage({super.key});

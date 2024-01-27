@@ -4,15 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
+
 import 'package:samrental/core/data/injector_container.dart';
 import 'package:samrental/core/extentions/theme.dart';
 import 'package:samrental/core/functions/functions.dart';
 import 'package:samrental/core/widgets/w_bottomsheet.dart';
 import 'package:samrental/features/cars/data/models/single_car.dart';
-import 'package:samrental/features/cars/presentation/pages/rental_terms.dart';
 import 'package:samrental/features/cars/presentation/widgets/reserve_app_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../../../../assets/colors.dart';
 import '../../../../assets/constants/constants.dart';

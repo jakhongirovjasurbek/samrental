@@ -141,7 +141,7 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                       Positioned(
                         left: 12,
                         top: 12,
-                        width: 100,
+                        width: 102,
                         height: 30,
                         child: Material(
                           borderRadius: BorderRadius.circular(8),
