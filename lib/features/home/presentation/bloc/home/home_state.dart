@@ -5,7 +5,7 @@ class HomeState extends Equatable {
   final List<CarEntity> cars;
   final List<CarEntity> allCars;
   final List<String> selectedTypes;
-
+  
 
   @override
   List<Object?> get props => [status, cars, allCars, selectedTypes];

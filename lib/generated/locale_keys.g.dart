@@ -74,5 +74,7 @@ abstract class  LocaleKeys {
   static const payment_validation = 'payment_validation';
   static const pickup_validation = 'pickup_validation';
   static const accept = 'accept';
+  static const from = 'from';
+  static const to = 'to';
 
 }

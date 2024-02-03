@@ -18,7 +18,7 @@ class CodegenLoader extends AssetLoader{
   "sam_rental": "Sam Rental",
   "slide_one_description": "Авто по запросу:\nваш личный ключ к удобству",
   "slide_two_description": "Арендуйте авто\nв одно касание.",
-  "slide_three_description": "Мобильная аренда авто – \nваш быстрый путь\nк свободе",
+  "slide_three_description": "Мобильная аренда авто – ваш быстрый путь\nк свободе",
   "my_reservations": "Мои бронирования",
   "companies": "Компании",
   "actual_machines": "Существующие машины",
@@ -87,7 +87,9 @@ class CodegenLoader extends AssetLoader{
   "phone_validation": "Номер телефона недействителен",
   "payment_validation": "Способ оплаты не выбран",
   "pickup_validation": "Метод получения не выбран",
-  "accept": "Принять"
+  "accept": "Принять",
+  "from": "Выберите дату начала",
+  "to": "Выберите дату сдачи"
 };
 static const Map<String,dynamic> en = {
   "sam_rental": "Sam Rental",
@@ -162,7 +164,9 @@ static const Map<String,dynamic> en = {
   "phone_validation": "Phone number is not valid",
   "payment_validation": "Payment method is not selected",
   "pickup_validation": "Receipt method is not selected",
-  "accept": "Accept"
+  "accept": "Accept",
+  "from": "Select starting date",
+  "to": "Select due date"
 };
 static const Map<String,dynamic> uz = {
   "sam_rental": "Sam Rental",
@@ -237,7 +241,9 @@ static const Map<String,dynamic> uz = {
   "phone_validation": "Telefon raqami yaroqli emas.",
   "payment_validation": "To'lov usuli tanlanmagan.",
   "pickup_validation": "Qabul qilish usuli tanlanmagan.",
-  "accept": "Qabul qilish"
+  "accept": "Qabul qilish",
+  "from": "Boshlanish sanasi",
+  "to": "Oxirgi sana"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "en": en, "uz": uz};
 }

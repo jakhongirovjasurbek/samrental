@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -8,6 +9,7 @@ import 'package:samrental/core/widgets/w_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:samrental/core/extentions/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../assets/colors.dart';
 import '../../../../assets/constants/constants.dart';
@@ -58,9 +60,8 @@ class _CarDetailsState extends State<CarDetails> {
             SizedBox(
               height: 296,
               child: PageView(
-
-                onPageChanged: (_){
-                  setState((){});
+                onPageChanged: (_) {
+                  setState(() {});
                 },
                 controller: pageController,
                 children: List.generate(
@@ -370,7 +371,15 @@ class _CarDetailsState extends State<CarDetails> {
                   const Gap(16),
                   Expanded(
                     child: WButton(
-                      onTap: () {},
+                      onTap: () async {
+                        try {
+                          await launchUrl(
+                            Uri(scheme: 'tel', path: '+998 90 000 00 01'),
+                          );
+                        } on PlatformException catch (exception) {
+                          print(exception);
+                        }
+                      },
                       color: tentiary.withOpacity(.12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -420,7 +429,7 @@ class _CarDetailsState extends State<CarDetails> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     pageController.dispose();
     super.dispose();
   }
@@ -469,5 +478,4 @@ class CarDocsItem extends StatelessWidget {
       ),
     );
   }
-
 }

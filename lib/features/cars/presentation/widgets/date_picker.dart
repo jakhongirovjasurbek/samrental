@@ -40,6 +40,7 @@ class _WDatePickerState extends State<WDatePicker> {
     dateTime = widget.initialDateTime;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -69,7 +70,9 @@ class _WDatePickerState extends State<WDatePicker> {
                     },
                     mode: CupertinoDatePickerMode.date,
                     dateOrder: DatePickerDateOrder.dmy,
-                    initialDateTime: widget.startingDate ? dateTime : dateTime ?? widget.minimumDate,
+                    initialDateTime: widget.startingDate
+                        ? dateTime
+                        : dateTime ?? widget.minimumDate,
                     minimumDate: widget.minimumDate,
                     maximumDate: widget.maximumDate,
                   ),
@@ -79,11 +82,11 @@ class _WDatePickerState extends State<WDatePicker> {
                     if (dateTime != null) {
                       widget.onSavePressed(dateTime!);
                     } else {
-                      if(widget.startingDate){
+                      if (widget.startingDate) {
                         widget.onSavePressed(DateTime.now());
                       } else {
-                        widget.onSavePressed(widget.minimumDate ?? DateTime.now());
-
+                        widget.onSavePressed(
+                            widget.minimumDate ?? DateTime.now());
                       }
                     }
                     Navigator.of(btshContext).pop();
@@ -113,7 +116,9 @@ class _WDatePickerState extends State<WDatePicker> {
             Expanded(
               child: Text(
                 widget.initialDateTime == null
-                    ? LocaleKeys.select_date.tr()
+                    ? widget.startingDate
+                        ? LocaleKeys.from.tr()
+                        : LocaleKeys.to.tr()
                     : '${widget.initialDateTime!.day}/${widget.initialDateTime!.month}/${widget.initialDateTime!.year}',
                 style: context.textStyle.fontSize17FontWeight500,
               ),

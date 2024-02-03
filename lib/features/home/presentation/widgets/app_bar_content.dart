@@ -90,6 +90,14 @@ class AppBarContent extends StatelessWidget {
           },
           icon: AppIcons.language,
         ),
+        const Gap(12),
+        AppBarActionItem(
+          backgroundColor: actionItemBackgroundColor,
+          onTap: () {
+            Navigator.of(context).pushNamed('/notifications');
+          },
+          icon: AppIcons.notification,
+        ),
         const Gap(7),
       ],
     );

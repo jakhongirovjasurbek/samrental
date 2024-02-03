@@ -66,10 +66,12 @@
   "comfort": "Premium",
   "business": "Luxury",
   "starting_date_validation": "Boshlang'ich kun yaroqli emas.",
-  "ending_date_validation":  "So'nggi kun yaroqli emas.",
+  "ending_date_validation": "So'nggi kun yaroqli emas.",
   "full_name_validation": "Berilgan ism yaroqli emas.",
   "phone_validation": "Telefon raqami yaroqli emas.",
   "payment_validation": "To'lov usuli tanlanmagan.",
   "pickup_validation": "Qabul qilish usuli tanlanmagan.",
-  "accept": "Qabul qilish"
+  "accept": "Qabul qilish",
+  "from": "Boshlanish sanasi",
+  "to": "Oxirgi sana"
 }

@@ -23,6 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         )) {
     on<HomeStarted>((event, emit) async {
       emit(state.copyWith(status: LoadingStatus.pure));
+
       final usecase = GetCarsUseCase(
         repository: HomeRepositoryImpl(
           dataSource: HomeNetworkDataSource(),

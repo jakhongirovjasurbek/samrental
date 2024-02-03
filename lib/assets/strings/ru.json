@@ -2,7 +2,7 @@
     "sam_rental": "Sam Rental",
     "slide_one_description": "Авто по запросу:\nваш личный ключ к удобству",
     "slide_two_description": "Арендуйте авто\nв одно касание.",
-    "slide_three_description": "Мобильная аренда авто – \nваш быстрый путь\nк свободе",
+    "slide_three_description": "Мобильная аренда авто – ваш быстрый путь\nк свободе",
     "my_reservations": "Мои бронирования",
     "companies": "Компании",
     "actual_machines": "Существующие машины",
@@ -71,5 +71,7 @@
     "phone_validation": "Номер телефона недействителен",
     "payment_validation": "Способ оплаты не выбран",
     "pickup_validation": "Метод получения не выбран",
-    "accept": "Принять"
+    "accept": "Принять",
+    "from":"Выберите дату начала",
+    "to":"Выберите дату сдачи"
 }

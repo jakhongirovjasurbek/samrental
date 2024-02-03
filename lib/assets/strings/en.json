@@ -71,5 +71,7 @@
     "phone_validation": "Phone number is not valid",
     "payment_validation": "Payment method is not selected",
     "pickup_validation": "Receipt method is not selected",
-    "accept": "Accept"
+    "accept": "Accept",
+    "from":"Select starting date",
+    "to":"Select due date"
 }

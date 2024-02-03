@@ -3,7 +3,7 @@ description: Car renting mobile application
 
 publish_to: 'none' 
 
-version: 0.0.0+1
+version: 1.0.0+1
 
 environment:
   sdk: '>=3.1.2 <4.0.0'
@@ -32,6 +32,8 @@ dependencies:
   geolocator: ^10.1.0
   flutter_launcher_icons: ^0.13.1
   mask_text_input_formatter: ^2.8.0
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
 
 dev_dependencies:
   flutter_test:

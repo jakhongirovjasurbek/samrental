@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "103830699007",
+    "project_id": "samrental-678ee",
+    "storage_bucket": "samrental-678ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103830699007:android:10b30dd2c15bcaf8cc85ca",
+        "android_client_info": {
+          "package_name": "org.cdevs.samrental"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAinXZFCiXKzULUq3NOgY9zxVnvx3Kquis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.example.samrental
+package org.cdevs.samrental
 
 import io.flutter.embedding.android.FlutterActivity
 import com.yandex.mapkit.MapKitFactory
