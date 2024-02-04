@@ -33,15 +33,30 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
-    });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   if (message.notification != null) {
+    //     Navigator.of(context).pushNamed('/notifications');
+    //   }
+    // });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    try {
+      FirebaseMessaging.instance.getInitialMessage().then((value) {
+        if (value != null) {
+          Navigator.of(context).pushNamed('/notifications');
+        }
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((event) {
+        Navigator.of(context).pushNamed('/notifications');
+      });
+    } catch (e) {
+      print(e);
+    }
+    super.didChangeDependencies();
   }
 
   @override

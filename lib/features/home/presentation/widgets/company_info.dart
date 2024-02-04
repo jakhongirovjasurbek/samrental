@@ -54,7 +54,7 @@ class CompanyItem extends StatelessWidget {
                   SvgPicture.asset(AppIcons.location),
                   const Gap(8),
                   Text(
-                    'Landmark Platan restaurant',
+                    'Alisher Navoiy 112',
                     style: Theme.of(context).textTheme.bodyLarge,
                   )
                 ],

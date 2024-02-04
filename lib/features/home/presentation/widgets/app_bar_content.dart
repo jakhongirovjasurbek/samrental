@@ -43,14 +43,14 @@ class AppBarContent extends StatelessWidget {
                       onPressed: () async {
                         try {
                           await launchUrl(
-                            Uri(scheme: 'tel', path: '+998 90 000 00 01'),
+                            Uri(scheme: 'tel', path: '+998902715545'),
                           );
                         } on PlatformException catch (exception) {
                           print(exception);
                         }
                       },
                       child: Text(
-                        '+998 90 000 00 01',
+                        '+998 (90) 271 55 45',
                         style:
                             context.textStyle.fontSize17FontWeight600.copyWith(
                           color: systemBlue,

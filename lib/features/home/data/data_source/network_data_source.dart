@@ -19,6 +19,8 @@ class _HomeNetworkDataSourceImpl implements HomeNetworkDataSource {
   @override
   Future<CarResponseModel> getCars() async {
     final dio = serviceLocator<Dio>();
+    await StorageRepository.getInstance();
+
     try {
       String? token = await FirebaseMessaging.instance.getToken();
 
@@ -26,15 +28,9 @@ class _HomeNetworkDataSourceImpl implements HomeNetworkDataSource {
         await StorageRepository.putString('fcm_token', token);
       }
 
-      if (token != null &&
-          StorageRepository.getString('fcm_token').isEmpty &&
-          token != StorageRepository.getString('fcm_token')) {
+      if (StorageRepository.getString('fcm_token').isEmpty) {
         await dio.post('/user/create', data: {'fcm_token': token});
       }
-    } catch (e) {
-      print(e);
-    }
-    try {
       final response = await dio.get('/mobilecar/all');
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {

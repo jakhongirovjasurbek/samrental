@@ -30,4 +30,5 @@ sealed class AppIcons {
   static const checked = 'assets/icons/checked.svg';
   static const download = 'assets/icons/download.svg';
   static const payme = 'assets/icons/payme.svg';
+  static const success = 'assets/images/success.gif';
 }

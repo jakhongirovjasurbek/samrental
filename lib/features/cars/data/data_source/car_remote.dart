@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../core/data/injector_container.dart';
 
-
 abstract class CarRemoteDataSource {
   factory CarRemoteDataSource() => _CarRemoteDataSourceImpl();
 
@@ -46,20 +45,6 @@ class _CarRemoteDataSourceImpl implements CarRemoteDataSource {
           'https://payme.uz/fallback/merchant/?id=659ced854de4489c5e27c207&payment_info=${reserve.fullName}&amount=${reserve.totalCost}00',
         );
       }
-      // print('Came here');
-      // final paymentResponse = await dio.post('https://checkout.paycom.uz',
-      //     data: FormData.fromMap(
-      //       {
-      //         "merchant": "6598fc505c8188fb6e91fc46",
-      //         "amount": "${reserve.totalCost}00",
-      //         "account[payment_info]": "test"
-      //       },
-      //     ));
-      // print(paymentResponse.statusCode);
-      // print(paymentResponse.realUri);
-      // print(paymentResponse.requestOptions.data);
-      // print(paymentResponse.data);
-      // print('Came here 2');
       final response = await dio.post(
         '/order/create',
         data: {
@@ -78,11 +63,6 @@ class _CarRemoteDataSourceImpl implements CarRemoteDataSource {
         },
       );
 
-      print(response.statusCode);
-      print(response.realUri);
-      print(response.requestOptions.data);
-      print(response.data);
-
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return;
       } else {
@@ -92,8 +72,6 @@ class _CarRemoteDataSourceImpl implements CarRemoteDataSource {
         );
       }
     } on DioException catch (error) {
-      print(error.message);
-      print(error.response!.data);
       throw ServerException(exceptionMessage: "$error", exceptionCode: '141');
     } on ServerException {
       rethrow;

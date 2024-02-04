@@ -13,10 +13,8 @@ import 'core/data/injector_container.dart';
 import 'generated/codegen_loader.g.dart';
 import 'generated/locale_keys.g.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
 }
 
 Future<void> main() async {
@@ -34,7 +32,7 @@ Future<void> main() async {
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  NotificationSettings settings = await messaging.requestPermission(
+  await messaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -43,24 +41,14 @@ Future<void> main() async {
     provisional: false,
     sound: true,
   );
-
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    print('User granted permission');
-  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-    print('User granted provisional permission');
-  } else {
-    print('User declined or has not accepted permission');
-  }
-
+  FirebaseMessaging.onBackgroundMessage(
+    firebaseMessagingBackgroundHandler,
+  );
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true, // Required to display a heads up notification
+    alert: true,
     badge: true,
     sound: true,
   );
-
-  FirebaseMessaging.instance.getInitialMessage();
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   /// Commands for running easy localization and generating code
   /// flutter pub run easy_localization:generate -o codegen_loader.g.dart -S lib/assets/strings

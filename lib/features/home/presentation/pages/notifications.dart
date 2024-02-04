@@ -62,11 +62,14 @@ class NotificationsPage extends StatelessWidget {
               } else if (state.status == LoadingStatus.loadedWithSuccess) {
                 return ListView.separated(
                   itemBuilder: (_, index) => NotificationItem(
-                      title: state.notifications[index].title,
-                      description: formatDate(
-                        DateTime.fromMillisecondsSinceEpoch(
-                            state.notifications[index].createdAt),
-                      )),
+                    title: state.notifications[index].title,
+                    dateTime: formatDate(
+                      DateTime.fromMillisecondsSinceEpoch(
+                        state.notifications[index].createdAt,
+                      ),
+                    ),
+                    description: state.notifications[index].body,
+                  ),
                   separatorBuilder: (_, __) => Container(
                     height: 1,
                     width: double.maxFinite,
@@ -85,55 +88,84 @@ class NotificationsPage extends StatelessWidget {
   }
 }
 
-class NotificationItem extends StatelessWidget {
+class NotificationItem extends StatefulWidget {
   final String title;
+  final String dateTime;
   final String description;
   const NotificationItem({
     super.key,
     required this.title,
+    required this.dateTime,
     required this.description,
   });
 
   @override
+  State<NotificationItem> createState() => _NotificationItemState();
+}
+
+class _NotificationItemState extends State<NotificationItem> {
+  bool isClicked = false;
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: const BoxDecoration(
-              color: buttonBackgroundColor,
-              shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isClicked = !isClicked;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: buttonBackgroundColor,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.check,
+                color: white,
+              ),
             ),
-            child: const Icon(
-              Icons.check,
-              color: white,
+            const Gap(12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textStyle.fontSize15FontWeight400,
+                  ),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: isClicked
+                        ? Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: Text(
+                              widget.description,
+                              maxLines: null,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.textStyle.fontSize14FontWeight400,
+                            ),
+                        )
+                        : null,
+                  ),
+                  const Gap(2),
+                  Text(
+                    widget.dateTime,
+                    style: context.textStyle.fontSize13FontWeight400
+                        .copyWith(color: const Color(0xFF9A9CA1)),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Gap(12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  title,
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.textStyle.fontSize15FontWeight400,
-                ),
-                const Gap(2),
-                Text(
-                  description,
-                  style: context.textStyle.fontSize13FontWeight400
-                      .copyWith(color: const Color(0xFF9A9CA1)),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

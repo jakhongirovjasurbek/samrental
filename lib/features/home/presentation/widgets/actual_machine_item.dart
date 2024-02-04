@@ -125,7 +125,7 @@ class _ActualMachineItemState extends State<ActualMachineItem> {
                         SvgPicture.asset(AppIcons.location),
                         const Gap(6),
                         Text(
-                          'Landmark Platan restaurant',
+                          'Alisher Navoiy 112',
                           style: context.textStyle.fontSize15FontWeight400
                               .copyWith(
                             color: headlineMediumTextColor.withOpacity(.5),

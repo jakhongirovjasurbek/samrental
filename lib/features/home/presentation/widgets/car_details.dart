@@ -374,7 +374,7 @@ class _CarDetailsState extends State<CarDetails> {
                       onTap: () async {
                         try {
                           await launchUrl(
-                            Uri(scheme: 'tel', path: '+998 90 000 00 01'),
+                            Uri(scheme: 'tel', path: '+998902715545'),
                           );
                         } on PlatformException catch (exception) {
                           print(exception);

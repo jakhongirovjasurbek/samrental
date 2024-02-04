@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,6 @@ import 'package:samrental/features/cars/data/models/single_car.dart';
 import 'package:samrental/features/cars/presentation/bloc/single_car_bloc.dart';
 import 'package:samrental/generated/locale_keys.g.dart';
 
-
 class ReserveAppBar extends StatelessWidget {
   const ReserveAppBar({
     super.key,
@@ -29,7 +27,9 @@ class ReserveAppBar extends StatelessWidget {
       stretch: true,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
-      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: white),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: white,
+      ),
       toolbarHeight: kToolbarHeight,
       expandedHeight: 157,
       elevation: 2,
@@ -70,52 +70,54 @@ class ReserveAppBar extends StatelessWidget {
       ),
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: false,
-        
         titlePadding: const EdgeInsets.all(8),
         expandedTitleScale: 1,
         title: BlocBuilder<SingleCarBloc, SingleCarState>(
           builder: (context, state) {
             final car = (state.singleCar as SingleCarModel);
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 88,
-                  height: 64,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+            return Padding(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 88,
+                    height: 64,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: '${Constants.imageBaseUrl}/${car.images.first}',
+                    ),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: '${Constants.imageBaseUrl}/${car.images.first}',
+                  const Gap(16),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          car.name,
+                          style: context.textStyle.fontSize17FontWeight400,
+                        ),
+                        const Gap(7),
+                        Text(
+                          '${formatPrice(car.cost)} ${LocaleKeys.sum_day.tr()}',
+                          style: context.textStyle.fontSize13FontWeight600
+                              .copyWith(color: labelColor.withOpacity(.6)),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const Gap(16),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        car.name,
-                        style: context.textStyle.fontSize17FontWeight400,
-                      ),
-                      const Gap(7),
-                      Text(
-                        '${formatPrice(car.cost)} ${LocaleKeys.sum_day.tr()}',
-                        style: context.textStyle.fontSize13FontWeight600
-                            .copyWith(color: labelColor.withOpacity(.6)),
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  car.type,
-                  style: context.textStyle.fontSize11FontWeight600
-                      .copyWith(color: cFFAA01),
-                )
-              ],
+                  Text(
+                    car.type,
+                    style: context.textStyle.fontSize11FontWeight600
+                        .copyWith(color: cFFAA01),
+                  )
+                ],
+              ),
             );
           },
         ),
