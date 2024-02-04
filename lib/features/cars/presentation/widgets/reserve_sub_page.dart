@@ -180,6 +180,13 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                   onTap: () {
                     setState(() {
                       isCash = true;
+                      isPickup = null;
+                      context
+                          .read<SingleCarBloc>()
+                          .add(const SingleCarGetSelectedLocation(
+                            latitude: 0,
+                            longitude: 0,
+                          ));
                     });
                   },
                   title: LocaleKeys.cash,
