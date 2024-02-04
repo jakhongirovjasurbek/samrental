@@ -180,7 +180,9 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                   onTap: () {
                     setState(() {
                       isCash = true;
-                      isPickup = null;
+                      if (isPickup != true) {
+                        isPickup = null;
+                      }
                       context
                           .read<SingleCarBloc>()
                           .add(const SingleCarGetSelectedLocation(
