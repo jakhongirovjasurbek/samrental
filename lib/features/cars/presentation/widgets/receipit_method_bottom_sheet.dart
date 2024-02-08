@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:samrental/assets/colors.dart';
 import 'package:samrental/core/extentions/theme.dart';
 import 'package:samrental/core/widgets/w_bottomsheet.dart';
 import 'package:samrental/features/cars/presentation/bloc/single_car_bloc.dart';
 import 'package:samrental/generated/locale_keys.g.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../../../../core/widgets/w_button.dart';
 import '../../../../core/widgets/w_radio.dart';
@@ -32,8 +32,9 @@ class ReceiptMethodBottomSheet extends StatefulWidget {
 
 class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
   bool? isPickup;
-  late List<MapObject> mapObjects;
-  late MapAnimation animation;
+  GoogleMapController? mapController;
+  // late List<MapObject> mapObjects;
+  // late MapAnimation animation;
 
   @override
   void initState() {
@@ -99,27 +100,29 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                   borderRadius: BorderRadius.circular(8),
                   child: Stack(
                     children: [
-                      YandexMap(
-                        scrollGesturesEnabled: true,
-                        nightModeEnabled: false,
+                      GoogleMap(
                         mapType: state.mapType,
-                        onCameraPositionChanged: (
-                          cameraPosition,
-                          reason,
-                          finished,
-                        ) async {
-                          if (finished) {
-                            if (mounted) {
-                              context
-                                  .read<SingleCarBloc>()
-                                  .add(SingleCarGetSelectedLocation(
-                                    latitude: cameraPosition.target.latitude,
-                                    longitude: cameraPosition.target.longitude,
-                                  ));
-                            }
+                        zoomControlsEnabled: false,
+                        markers: {
+                          if (state.currentLocation != null)
+                            Marker(
+                              icon: BitmapDescriptor.defaultMarker,
+                              markerId: const MarkerId('current_location'),
+                              position: state.currentLocation!,
+                            ),
+                        },
+                        onCameraMove: (position) async {
+                          if (mounted) {
+                            context
+                                .read<SingleCarBloc>()
+                                .add(SingleCarGetSelectedLocation(
+                                  latitude: position.target.latitude,
+                                  longitude: position.target.longitude,
+                                ));
                           }
                         },
                         onMapCreated: (controller) {
+                          mapController = controller;
                           context.read<SingleCarBloc>().add(
                                 SingleCarGetCurrentLocationEvent(
                                   mapController: controller,
@@ -128,16 +131,49 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                                 ),
                               );
                         },
+                        initialCameraPosition: const CameraPosition(
+                          target: LatLng(
+                            41.4251376,
+                            69.247206,
+                          ),
+                        ),
                       ),
-
-                      /// Location mark
+                      // YandexMap(
+                      //   scrollGesturesEnabled: true,
+                      //   nightModeEnabled: false,
+                      //   mapType: state.mapType,
+                      //   onCameraPositionChanged: (
+                      //     cameraPosition,
+                      //     reason,
+                      //     finished,
+                      //   ) async {
+                      //     if (finished) {
+                      //       if (mounted) {
+                      //         context
+                      //             .read<SingleCarBloc>()
+                      //             .add(SingleCarGetSelectedLocation(
+                      //               latitude: cameraPosition.target.latitude,
+                      //               longitude: cameraPosition.target.longitude,
+                      //             ));
+                      //       }
+                      //     }
+                      //   },
+                      //   onMapCreated: (controller) async {
+                      //     controller.addListener(() {});
+                      //     context.read<SingleCarBloc>().add(
+                      //           SingleCarGetCurrentLocationEvent(
+                      //             mapController: controller,
+                      //             onSuccess: () {},
+                      //             onFailure: (message) {},
+                      //           ),
+                      //         );
+                      //   },
+                      // ),
                       Center(
                         child: SvgPicture.asset(
                           'assets/icons/place_marker.svg',
                         ),
                       ),
-
-                      /// Map type (Map, Satellite)
                       Positioned(
                         left: 12,
                         top: 12,
@@ -150,23 +186,22 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  context.read<SingleCarBloc>().add(
-                                        const ChangeMapViewEvent(
-                                          mapType: MapType.map,
-                                        ),
-                                      );
-                                },
+                                onTap: () => context.read<SingleCarBloc>().add(
+                                      const ChangeMapViewEvent(
+                                        mapType: MapType.normal,
+                                      ),
+                                    ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     'Map',
                                     style: TextStyle(
                                       fontSize: 11,
-                                      fontWeight: state.mapType == MapType.map
-                                          ? FontWeight.w500
-                                          : FontWeight.w400,
-                                      color: state.mapType == MapType.map
+                                      fontWeight:
+                                          state.mapType == MapType.normal
+                                              ? FontWeight.w500
+                                              : FontWeight.w400,
+                                      color: state.mapType == MapType.satellite
                                           ? black
                                           : lightGrey,
                                     ),
@@ -179,13 +214,11 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                                 color: grey,
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  context.read<SingleCarBloc>().add(
-                                        const ChangeMapViewEvent(
-                                          mapType: MapType.satellite,
-                                        ),
-                                      );
-                                },
+                                onTap: () => context.read<SingleCarBloc>().add(
+                                      const ChangeMapViewEvent(
+                                        mapType: MapType.satellite,
+                                      ),
+                                    ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -196,10 +229,9 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                                           state.mapType == MapType.satellite
                                               ? FontWeight.w500
                                               : FontWeight.w400,
-                                      color:
-                                          state.mapType == MapType.satellite
-                                              ? black
-                                              : lightGrey,
+                                      color: state.mapType == MapType.satellite
+                                          ? black
+                                          : lightGrey,
                                     ),
                                   ),
                                 ),
@@ -208,8 +240,6 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                           ),
                         ),
                       ),
-
-                      /// Zoom in, Zoom out buttons (plus, minus)
                       Align(
                         alignment: Alignment.topRight,
                         child: Padding(
@@ -223,11 +253,10 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     IconButton(
-                                      onPressed: () {
-                                        context.read<SingleCarBloc>().add(
-                                              const ZoomInMapEvent(),
-                                            );
-                                      },
+                                      onPressed: () =>
+                                          context.read<SingleCarBloc>().add(
+                                                const ZoomInMapEvent(),
+                                              ),
                                       icon: const Icon(
                                         Icons.add_rounded,
                                         size: 24,
@@ -264,11 +293,10 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
                                 borderRadius: BorderRadius.circular(8),
                                 color: white.withOpacity(0.85),
                                 child: IconButton(
-                                  onPressed: () {
-                                    context.read<SingleCarBloc>().add(
-                                          const FindMyCurrentLocationEvent(),
-                                        );
-                                  },
+                                  onPressed: () =>
+                                      context.read<SingleCarBloc>().add(
+                                            const FindMyCurrentLocationEvent(),
+                                          ),
                                   icon: const Image(
                                     image: AssetImage(
                                       'assets/png/person_map.png',
@@ -298,5 +326,11 @@ class _ReceiptMethodBottomSheetState extends State<ReceiptMethodBottomSheet> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    mapController?.dispose();
+    super.dispose();
   }
 }

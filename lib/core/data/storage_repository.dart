@@ -18,9 +18,9 @@ class StorageRepository {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  static Future<bool>? putString(String key, String value) {
+  static Future<bool?> putString(String key, String value) async {
     if (_preferences == null) return null;
-    return _preferences!.setString(key, value);
+    return await _preferences!.setString(key, value);
   }
 
   static Future<bool>? putList(String key, List<String> value) {

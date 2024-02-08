@@ -5,6 +5,7 @@ import 'package:samrental/features/home/domain/entites/notification.dart';
 
 abstract class HomeRepository {
   Future<Either<ServerFailure, List<CarEntity>>> getCars();
+  Future<Either<ServerFailure, void>> initializeNotificationConfiguration();
 
   Future<Either<ServerFailure, List<NotificationEntity>>> getNotifications();
 }

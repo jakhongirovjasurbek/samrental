@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:samrental/assets/theme.dart';
 import 'package:samrental/core/routes/app_routes.dart';
 import 'package:samrental/features/home/presentation/bloc/home/home_bloc.dart';
+import 'package:samrental/features/home/presentation/bloc/notifications/notification_bloc.dart';
 import 'package:samrental/firebase_options.dart';
 
 import 'core/data/injector_container.dart';
@@ -30,24 +31,8 @@ Future<void> main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
   FirebaseMessaging.onBackgroundMessage(
     firebaseMessagingBackgroundHandler,
-  );
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
   );
 
   /// Commands for running easy localization and generating code
@@ -69,7 +54,12 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => HomeBloc())],
+      providers: [
+        BlocProvider(
+          create: (context) => HomeBloc(),
+        ),
+        BlocProvider(create: (context) => NotificationBloc()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,

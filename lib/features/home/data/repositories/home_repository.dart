@@ -53,4 +53,20 @@ class HomeRepositoryImpl implements HomeRepository {
       ));
     }
   }
+
+  @override
+  Future<Either<ServerFailure, void>>
+      initializeNotificationConfiguration() async {
+    try {
+      final response =
+          await _homeNetworkDataSource.initializeNotificationConfiguration();
+
+      return Right(response);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(
+        failureMessage: error.exceptionMessage,
+        failureCode: error.exceptionCode,
+      ));
+    }
+  }
 }

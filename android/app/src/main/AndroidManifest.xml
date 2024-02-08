@@ -6,6 +6,8 @@
         android:label="Sam Rental"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyB0VoV0g10hZBl3HO7VOXqOzIbr8QjGlss"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

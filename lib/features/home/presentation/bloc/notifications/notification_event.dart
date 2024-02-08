@@ -8,3 +8,9 @@ sealed class NotificationEvent extends Equatable {
 }
 
 class GetAllNotifications extends NotificationEvent {}
+
+class InitializeNotificationConfiguration extends NotificationEvent {
+  final ValueChanged<String> onFailure;
+
+  const InitializeNotificationConfiguration({required this.onFailure});
+}

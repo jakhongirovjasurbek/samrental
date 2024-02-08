@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:samrental/core/data/injector_container.dart';
 import 'package:samrental/features/cars/domain/entity/car.dart';
@@ -67,27 +67,25 @@ class SingleCarBloc extends Bloc<SingleCarEvent, SingleCarState> {
         emit(
           state.copyWith(
             mapController: event.mapController,
-            animation: const MapAnimation(
-              type: MapAnimationType.linear,
-              duration: 1,
-            ),
+            currentLocation: LatLng(position.latitude, position.longitude),
+            // animation: const MapAnimation(
+            //   type: MapAnimationType.linear,
+            //   duration: 1,
+            // ),
           ),
         );
 
         event.mapController.moveCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              target: Point(
-                latitude: position.latitude,
-                longitude: position.longitude,
-              ),
+              target: LatLng(position.latitude, position.longitude),
               zoom: 18,
             ),
           ),
-          animation: const MapAnimation(
-            type: MapAnimationType.linear,
-            duration: 1,
-          ),
+          // animation: const MapAnimation(
+          //   type: MapAnimationType.linear,
+          //   duration: 1,
+          // ),
         );
       } catch (error) {
         print(error);
@@ -107,14 +105,12 @@ class SingleCarBloc extends Bloc<SingleCarEvent, SingleCarState> {
 
     on<ZoomInMapEvent>((event, emit) {
       state.mapController?.moveCamera(
-        animation: state.animation,
         CameraUpdate.zoomIn(),
       );
     });
 
     on<ZoomOutMapEvent>((event, emit) {
       state.mapController?.moveCamera(
-        animation: state.animation,
         CameraUpdate.zoomOut(),
       );
     });
@@ -125,13 +121,12 @@ class SingleCarBloc extends Bloc<SingleCarEvent, SingleCarState> {
       await state.mapController?.moveCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            target: Point(
-              latitude: position.latitude,
-              longitude: position.longitude,
+            target: LatLng(
+              position.latitude,
+              position.longitude,
             ),
           ),
         ),
-        animation: state.animation,
       );
       emit(
         state.copyWith(

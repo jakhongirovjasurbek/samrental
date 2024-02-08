@@ -46,7 +46,7 @@ class SingleCarReserveCarEvent extends SingleCarEvent {
 }
 
 class SingleCarGetCurrentLocationEvent extends SingleCarEvent {
-  final YandexMapController mapController;
+  final GoogleMapController mapController;
   final VoidCallback onSuccess;
   final ValueChanged<String> onFailure;
 
