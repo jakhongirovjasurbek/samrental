@@ -39,385 +39,441 @@ class _CarDetailsState extends State<CarDetails> {
   final pageController = PageController();
   @override
   Widget build(BuildContext context) {
-    return WBottomSheet(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-      backgroundColor: scaffoldBackgroundColor,
-      height: MediaQuery.of(context).size.height * 0.85,
-      isScrollable: true,
-      bottomNavigation: Container(
-        width: double.maxFinite,
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [BoxShadow(color: black.withOpacity(.05), blurRadius: 4)],
-        ),
-      ),
-      children: [
-        Stack(
-          clipBehavior: Clip.hardEdge,
-          children: [
-            SizedBox(
-              height: 296,
-              child: PageView(
-                onPageChanged: (_) {
-                  setState(() {});
-                },
-                controller: pageController,
-                children: List.generate(
-                  widget.widget.car.images.length,
-                  (index) => Container(
-                    height: 296,
-                    width: double.maxFinite,
-                    decoration: const BoxDecoration(
-                      color: logoBackground,
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          '${Constants.imageBaseUrl}/${widget.widget.car.images[index]}',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+    return DraggableScrollableSheet(
+        builder: (_, controller) => Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(
+                // color: white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(21),
                 ),
               ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 12,
-              child: Align(
-                child: SmoothPageIndicator(
-                  controller: pageController,
-                  count: widget.widget.car.images.length,
-                  effect: JumpingDotEffect(
-                    dotWidth: 8,
-                    dotHeight: 8,
-                    activeDotColor: headlineMediumTextColor,
-                    dotColor: headlineMediumTextColor.withOpacity(.2),
-                    spacing: 8,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        BlocBuilder<SingleCarBloc, SingleCarState>(
-          builder: (context, state) {
-            if (state.status == LoadingStatus.pure) {
-              context.read<SingleCarBloc>().add(SingleCarStarted(
-                    id: widget.widget.car.id,
-                    onFailure: (message) {},
-                  ));
-              return const SizedBox();
-            } else if (state.status == LoadingStatus.loading) {
-              return const SizedBox();
-            } else if (state.status == LoadingStatus.loadedWithSuccess) {
-              final car = state.singleCar as SingleCarModel;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+              child: ListView(
+                controller: controller,
                 children: [
-                  Container(
-                    width: double.maxFinite,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: black.withOpacity(.05),
-                          blurRadius: 4,
-                        )
-                      ],
+                  Align(
+                    child: Container(
+                      height: 5,
+                      width: 36,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
                     ),
-                    child: Column(children: [
-                      Row(children: [
-                        Text(
-                          car.type,
-                          style: context.textStyle.fontSize11FontWeight600
-                              .copyWith(
-                            color: labelColor.withOpacity(.6),
-                          ),
-                        ),
-                        Container(
-                          width: 4,
-                          height: 4,
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: headlineMediumTextColor.withOpacity(.5),
-                          ),
-                        ),
-                        Text(
-                          car.name,
-                          style: context.textStyle.fontSize11FontWeight600
-                              .copyWith(
-                            color: labelColor.withOpacity(.6),
-                          ),
-                        ),
-                        // const Spacer(),
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(
-                        //     horizontal: 10,
-                        //     vertical: 6,
-                        //   ),
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(50),
-                        //     color: buttonBackgroundColor,
-                        //   ),
-                        //   child: Text(
-                        //     'New',
-                        //     style: context.textStyle.fontSize11FontWeight600
-                        //         .copyWith(color: white),
-                        //   ),
-                        // )
-                      ]),
-                      const Gap(12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              car.name,
-                              style: context.textStyle.fontSize20FontWeight600,
-                              overflow: TextOverflow.ellipsis,
+                  ),
+                  const Gap(6),
+                  Stack(
+                    clipBehavior: Clip.hardEdge,
+                    children: [
+                      SizedBox(
+                        height: 296,
+                        child: PageView(
+                          onPageChanged: (_) {
+                            setState(() {});
+                          },
+                          controller: pageController,
+                          children: List.generate(
+                            widget.widget.car.images.length,
+                            (index) => Container(
+                              height: 296,
+                              clipBehavior: Clip.hardEdge,
+                              width: double.maxFinite,
+                              decoration: const BoxDecoration(
+                                color: logoBackground,
+                              ),
+                              child: CachedNetworkImage(
+                                height: 296,
+                                width: double.maxFinite,
+                                imageUrl:
+                                    '${Constants.imageBaseUrl}/${widget.widget.car.images[index]}',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                          Text(
-                            '${formatPrice(car.cost)} ${LocaleKeys.sum_day.tr()}',
-                            style: context.textStyle.fontSize20FontWeight400,
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 12,
+                        child: Align(
+                          child: SmoothPageIndicator(
+                            controller: pageController,
+                            count: widget.widget.car.images.length,
+                            effect: JumpingDotEffect(
+                              dotWidth: 8,
+                              dotHeight: 8,
+                              activeDotColor: headlineMediumTextColor,
+                              dotColor: headlineMediumTextColor.withOpacity(.2),
+                              spacing: 8,
+                            ),
                           ),
-                        ],
-                      )
-                    ]),
+                        ),
+                      ),
+                    ],
                   ),
-                  const Gap(12),
-                  Container(
-                    width: double.maxFinite,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(16)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: black.withOpacity(.05),
-                          blurRadius: 4,
-                        )
-                      ],
-                    ),
-                    child: Row(children: [
-                      Expanded(
-                        child: CarDetailsItem(
-                          icon: AppIcons.person,
-                          title: LocaleKeys.places_count.tr(
-                            args: ['${car.place}'],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 40,
-                        width: .5,
-                        color: const Color(0xFFB4B4CF).withOpacity(.3),
-                      ),
-                      Expanded(
-                        child: CarDetailsItem(
-                          icon: AppIcons.bag,
-                          title: LocaleKeys.baggage_count.tr(
-                            args: ['${car.baggage}'],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 40,
-                        width: .5,
-                        color: const Color(0xFFB4B4CF).withOpacity(.3),
-                      ),
-                      Expanded(
-                        child: CarDetailsItem(
-                          icon: car.fuelType != 'gasoline'
-                              ? AppIcons.methane
-                              : AppIcons.gasoline,
-                          title: getFuelType(car.fuelType),
-                        ),
-                      )
-                    ]),
-                  ),
-                  const Gap(1),
-                  Container(
-                    width: double.maxFinite,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(16)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: black.withOpacity(.05),
-                          blurRadius: 4,
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: CarDetailsItem(
-                            icon: car.conditioner
-                                ? AppIcons.conditioner
-                                : AppIcons.noConditioner,
-                            title: car.conditioner
-                                ? LocaleKeys.conditioner
-                                : LocaleKeys.no_conditioner,
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: .5,
-                          color: const Color(0xFFB4B4CF).withOpacity(.3),
-                        ),
-                        Expanded(
-                          child: CarDetailsItem(
-                            icon: AppIcons.speed,
-                            title:
-                                '${car.maxSpeed} ${LocaleKeys.km_per_hour.tr()}',
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: .5,
-                          color: const Color(0xFFB4B4CF).withOpacity(.3),
-                        ),
-                        Expanded(
-                          child: CarDetailsItem(
-                            icon: car.tinting
-                                ? AppIcons.tinting
-                                : AppIcons.noTinting,
-                            title: car.tinting
-                                ? LocaleKeys.tinting.tr()
-                                : LocaleKeys.no_tinting.tr(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 0, 8),
-          child: Text(
-            LocaleKeys.details.tr().toUpperCase(),
-            style: context.textStyle.fontSize13FontWeight500.copyWith(
-              color: labelColor.withOpacity(.6),
-            ),
-          ),
-        ),
-        Container(
-          width: double.maxFinite,
-          decoration: BoxDecoration(
-            color: white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            boxShadow: [
-              BoxShadow(
-                color: black.withOpacity(.05),
-                blurRadius: 4,
-              )
-            ],
-          ),
-          child: Column(
-            children: [
-              CarDocsItem(
-                title: LocaleKeys.rental_terms,
-                onTap: () {
-                  Navigator.of(context).pushNamed('/rental_terms');
-                },
-              ),
-              // Container(
-              //   width: double.maxFinite,
-              //   height: 1,
-              //   margin: const EdgeInsets.only(left: 16),
-              //   color: scaffoldBackgroundColor,
-              // ),
-              // CarDocsItem(
-              //   onTap: () {},
-              //   title: LocaleKeys.insurance,
-              //   isIncluded: true,
-              // ),
-              Container(
-                width: double.maxFinite,
-                height: 1,
-                margin: const EdgeInsets.only(left: 16),
-                color: scaffoldBackgroundColor,
-              ),
-              CarDocsItem(
-                title: LocaleKeys.owner,
-                onTap: () {
-                  Navigator.of(context).pushNamed('/owner');
-                },
-              ),
-              // Container(
-              //   width: double.maxFinite,
-              //   height: 1,
-              //   color: scaffoldBackgroundColor,
-              // ),
-              const Gap(16),
-              Row(
-                children: [
-                  const Gap(16),
-                  Expanded(
-                    child: WButton(
-                      onTap: () async {
-                        try {
-                          await launchUrl(
-                            Uri(scheme: 'tel', path: '+998902715545'),
+                  ColoredBox(
+                    color: scaffoldBackgroundColor,
+                    child: BlocBuilder<SingleCarBloc, SingleCarState>(
+                      builder: (context, state) {
+                        if (state.status == LoadingStatus.pure) {
+                          context.read<SingleCarBloc>().add(SingleCarStarted(
+                                id: widget.widget.car.id,
+                                onFailure: (message) {},
+                              ));
+                          return const SizedBox();
+                        } else if (state.status == LoadingStatus.loading) {
+                          return const SizedBox();
+                        } else if (state.status ==
+                            LoadingStatus.loadedWithSuccess) {
+                          final car = state.singleCar as SingleCarModel;
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: double.maxFinite,
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: black.withOpacity(.05),
+                                      blurRadius: 4,
+                                    )
+                                  ],
+                                ),
+                                child: Column(children: [
+                                  Row(children: [
+                                    Text(
+                                      car.type,
+                                      style: context
+                                          .textStyle.fontSize11FontWeight600
+                                          .copyWith(
+                                        color: labelColor.withOpacity(.6),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 4,
+                                      height: 4,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: headlineMediumTextColor
+                                            .withOpacity(.5),
+                                      ),
+                                    ),
+                                    Text(
+                                      car.name,
+                                      style: context
+                                          .textStyle.fontSize11FontWeight600
+                                          .copyWith(
+                                        color: labelColor.withOpacity(.6),
+                                      ),
+                                    ),
+                                    // const Spacer(),
+                                    // Container(
+                                    //   padding: const EdgeInsets.symmetric(
+                                    //     horizontal: 10,
+                                    //     vertical: 6,
+                                    //   ),
+                                    //   decoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.circular(50),
+                                    //     color: buttonBackgroundColor,
+                                    //   ),
+                                    //   child: Text(
+                                    //     'New',
+                                    //     style: context.textStyle.fontSize11FontWeight600
+                                    //         .copyWith(color: white),
+                                    //   ),
+                                    // )
+                                  ]),
+                                  const Gap(12),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          car.name,
+                                          style: context
+                                              .textStyle.fontSize20FontWeight600,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${formatPrice(car.cost)} ${LocaleKeys.sum_day.tr()}',
+                                        style: context
+                                            .textStyle.fontSize20FontWeight400,
+                                      ),
+                                    ],
+                                  )
+                                ]),
+                              ),
+                              const Gap(12),
+                              Container(
+                                width: double.maxFinite,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 24),
+                                decoration: BoxDecoration(
+                                  color: white,
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(16)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: black.withOpacity(.05),
+                                      blurRadius: 4,
+                                    )
+                                  ],
+                                ),
+                                child: Row(children: [
+                                  Expanded(
+                                    child: CarDetailsItem(
+                                      icon: AppIcons.person,
+                                      title: LocaleKeys.places_count.tr(
+                                        args: ['${car.place}'],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: .5,
+                                    color:
+                                        const Color(0xFFB4B4CF).withOpacity(.3),
+                                  ),
+                                  Expanded(
+                                    child: CarDetailsItem(
+                                      icon: AppIcons.bag,
+                                      title: LocaleKeys.baggage_count.tr(
+                                        args: ['${car.baggage}'],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: .5,
+                                    color:
+                                        const Color(0xFFB4B4CF).withOpacity(.3),
+                                  ),
+                                  Expanded(
+                                    child: CarDetailsItem(
+                                      icon: car.fuelType != 'gasoline'
+                                          ? AppIcons.methane
+                                          : AppIcons.gasoline,
+                                      title: getFuelType(car.fuelType),
+                                    ),
+                                  )
+                                ]),
+                              ),
+                              const Gap(1),
+                              Container(
+                                width: double.maxFinite,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 24),
+                                decoration: BoxDecoration(
+                                  color: white,
+                                  borderRadius: const BorderRadius.vertical(
+                                      bottom: Radius.circular(16)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: black.withOpacity(.05),
+                                      blurRadius: 4,
+                                    )
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: CarDetailsItem(
+                                        icon: car.conditioner
+                                            ? AppIcons.conditioner
+                                            : AppIcons.noConditioner,
+                                        title: car.conditioner
+                                            ? LocaleKeys.conditioner
+                                            : LocaleKeys.no_conditioner,
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 40,
+                                      width: .5,
+                                      color:
+                                          const Color(0xFFB4B4CF).withOpacity(.3),
+                                    ),
+                                    Expanded(
+                                      child: CarDetailsItem(
+                                        icon: AppIcons.speed,
+                                        title:
+                                            '${car.maxSpeed} ${LocaleKeys.km_per_hour.tr()}',
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 40,
+                                      width: .5,
+                                      color:
+                                          const Color(0xFFB4B4CF).withOpacity(.3),
+                                    ),
+                                    Expanded(
+                                      child: CarDetailsItem(
+                                        icon: car.tinting
+                                            ? AppIcons.tinting
+                                            : AppIcons.noTinting,
+                                        title: car.tinting
+                                            ? LocaleKeys.tinting.tr()
+                                            : LocaleKeys.no_tinting.tr(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           );
-                        } on PlatformException catch (exception) {
-                          print(exception);
+                        } else {
+                          return const SizedBox();
                         }
                       },
-                      color: tentiary.withOpacity(.12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(AppIcons.call),
-                          const Gap(4),
-                          Text(
-                            LocaleKeys.call.tr(),
-                            style: context.textStyle.fontSize17FontWeight400
-                                .copyWith(
-                              color: headlineMediumTextColor.withOpacity(.6),
-                            ),
+                    ),
+                  ),
+                  ColoredBox(
+                    color: scaffoldBackgroundColor,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 12, 0, 8),
+                      child: Text(
+                        LocaleKeys.details.tr().toUpperCase(),
+                        style: context.textStyle.fontSize13FontWeight500.copyWith(
+                          color: labelColor.withOpacity(.6),
+                        ),
+                      ),
+                    ),
+                  ),
+                  ColoredBox(
+                    color: scaffoldBackgroundColor,
+                    child: Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: white,
+                        borderRadius:
+                            const BorderRadius.vertical(top: Radius.circular(16)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: black.withOpacity(.05),
+                            blurRadius: 4,
                           )
                         ],
                       ),
+                      child: Column(
+                        children: [
+                          CarDocsItem(
+                            title: LocaleKeys.rental_terms,
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/rental_terms');
+                            },
+                          ),
+                          // Container(
+                          //   width: double.maxFinite,
+                          //   height: 1,
+                          //   margin: const EdgeInsets.only(left: 16),
+                          //   color: scaffoldBackgroundColor,
+                          // ),
+                          // CarDocsItem(
+                          //   onTap: () {},
+                          //   title: LocaleKeys.insurance,
+                          //   isIncluded: true,
+                          // ),
+                          Container(
+                            width: double.maxFinite,
+                            height: 1,
+                            margin: const EdgeInsets.only(left: 16),
+                            color: scaffoldBackgroundColor,
+                          ),
+                          CarDocsItem(
+                            title: LocaleKeys.owner,
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/owner');
+                            },
+                          ),
+                          // Container(
+                          //   width: double.maxFinite,
+                          //   height: 1,
+                          //   color: scaffoldBackgroundColor,
+                          // ),
+                          const Gap(16),
+                          Row(
+                            children: [
+                              const Gap(16),
+                              Expanded(
+                                child: WButton(
+                                  onTap: () async {
+                                    try {
+                                      await launchUrl(
+                                        Uri(scheme: 'tel', path: '+998902715545'),
+                                      );
+                                    } on PlatformException catch (exception) {
+                                      print(exception);
+                                    }
+                                  },
+                                  color: tentiary.withOpacity(.12),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(AppIcons.call),
+                                      const Gap(4),
+                                      Text(
+                                        LocaleKeys.call.tr(),
+                                        style: context
+                                            .textStyle.fontSize17FontWeight400
+                                            .copyWith(
+                                          color: headlineMediumTextColor
+                                              .withOpacity(.6),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const Gap(8),
+                              Expanded(
+                                child: WButton(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      '/reserve',
+                                      arguments: widget.widget.car.id,
+                                    );
+                                  },
+                                  text: LocaleKeys.reserve,
+                                ),
+                              ),
+                              const Gap(16),
+                            ],
+                          ),
+                          const Gap(16),
+                        ],
+                      ),
                     ),
                   ),
-                  const Gap(8),
-                  Expanded(
-                    child: WButton(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          '/reserve',
-                          arguments: widget.widget.car.id,
-                        );
-                      },
-                      text: LocaleKeys.reserve,
-                    ),
-                  ),
-                  const Gap(16),
                 ],
               ),
-              const Gap(16),
-            ],
-          ),
-        ),
-      ],
-    );
+            )
+        // WBottomSheet(
+        //   contentPadding: const EdgeInsets.symmetric(horizontal: 0),
+        //   backgroundColor: scaffoldBackgroundColor,
+        //   height: MediaQuery.of(context).size.height * 0.85,
+        //   isScrollable: true,
+        //   bottomNavigation: Container(
+        //     width: double.maxFinite,
+        //     padding: const EdgeInsets.all(16),
+        //     decoration: BoxDecoration(
+        //       color: white,
+        //       borderRadius: BorderRadius.circular(12),
+        //       boxShadow: [
+        //         BoxShadow(color: black.withOpacity(.05), blurRadius: 4)
+        //       ],
+        //     ),
+        //   ),
+        //   children: [
+
+        //   ],
+        // ),
+        );
   }
 
   String getFuelType(String fuelType) {

@@ -64,9 +64,13 @@ class _ActualMachineItemState extends State<ActualMachineItem> {
                         (index) => Container(
                           height: 280,
                           width: double.maxFinite,
+                          clipBehavior: Clip.hardEdge,
                           decoration:
                               const BoxDecoration(color: logoBackground),
                           child: CachedNetworkImage(
+                            height: 280,
+                            width: double.maxFinite,
+                            fit: BoxFit.cover,
                             imageUrl:
                                 '${Constants.imageBaseUrl}/${widget.car.images[index]}',
                           ),

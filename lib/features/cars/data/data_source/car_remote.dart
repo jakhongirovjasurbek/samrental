@@ -49,10 +49,8 @@ class _CarRemoteDataSourceImpl implements CarRemoteDataSource {
         '/order/create',
         data: {
           "car_id": reserve.carId,
-          "starting_date":
-              reserve.startingDate.toUtc().millisecondsSinceEpoch ~/ 1000,
-          "ending_date":
-              reserve.endingDate.toUtc().millisecondsSinceEpoch ~/ 1000,
+          "starting_date": reserve.startingDate.millisecondsSinceEpoch,
+          "ending_date": reserve.endingDate.millisecondsSinceEpoch,
           "full_name": reserve.fullName,
           "phone": reserve.phoneNumber,
           "cash": reserve.isCash,

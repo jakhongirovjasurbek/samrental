@@ -383,7 +383,16 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                                                 ),
                                                 const Gap(16),
                                                 Text(
-                                                  Constants.rentalTerms,
+                                                  context.locale.languageCode ==
+                                                          'uz'
+                                                      ? Constants.rentalTermsUz
+                                                      : context.locale
+                                                                  .languageCode ==
+                                                              'ru'
+                                                          ? Constants
+                                                              .rentalTermsRu
+                                                          : Constants
+                                                              .rentalTermsEn,
                                                   style: context.textStyle
                                                       .fontSize15FontWeight500,
                                                 ),

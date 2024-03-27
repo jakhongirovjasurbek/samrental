@@ -69,15 +69,8 @@ class _HomeNetworkDataSourceImpl implements HomeNetworkDataSource {
       String? token = await FirebaseMessaging.instance.getToken();
 
       if (token != null) {
-        await StorageRepository.putString('fcm_token', token);
-      }
-
-      if (StorageRepository.getString('fcm_token').isEmpty ||
-          StorageRepository.getString('fcm_token') != token) {
-        if (token != null) {
-          await dio.post('/user/create', data: {'fcm_token': token});
-          return;
-        }
+        await dio.post('/user/create', data: {'fcm_token': token});
+        return;
       }
     } on ServerException {
       rethrow;

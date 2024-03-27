@@ -31,8 +31,8 @@ class RentalTermsPage extends StatelessWidget {
                     Navigator.of(context).pop();
                   },
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     child: SvgPicture.asset(
                       AppIcons.iosArrowLeft,
                       color: black,
@@ -53,7 +53,11 @@ class RentalTermsPage extends StatelessWidget {
           ),
           const Gap(16),
           Text(
-            Constants.rentalTerms,
+            context.locale.languageCode == 'uz'
+                ? Constants.rentalTermsUz
+                : context.locale.languageCode == 'ru'
+                    ? Constants.rentalTermsRu
+                    : Constants.rentalTermsEn,
             style: context.textStyle.fontSize15FontWeight500,
           ),
           // child: SafeArea(
