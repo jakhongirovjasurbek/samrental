@@ -131,7 +131,7 @@ class _ReserveSubPageState extends State<ReserveSubPage> {
                   inputFormatters: [
                     MaskTextInputFormatter(
                       initialText: '',
-                      mask: '+### (##) ###-##-##',
+                      mask: '+###############',
                       filter: {"#": RegExp(r'[0-9]')},
                       type: MaskAutoCompletionType.lazy,
                     )
