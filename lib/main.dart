@@ -1,18 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:samrental/assets/theme.dart';
 import 'package:samrental/core/routes/app_routes.dart';
 import 'package:samrental/features/home/presentation/bloc/home/home_bloc.dart';
 import 'package:samrental/features/home/presentation/bloc/notifications/notification_bloc.dart';
-import 'package:samrental/firebase_options.dart';
 
 import 'core/data/injector_container.dart';
+import 'firebase_options.dart';
 import 'generated/codegen_loader.g.dart';
 import 'generated/locale_keys.g.dart';
 
@@ -33,18 +32,16 @@ Future<void> main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
+  // FlutterError.onError = (errorDetails) {
+  //   FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  // };
   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
+  // PlatformDispatcher.instance.onError = (error, stack) {
+  //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+  //   return true;
+  // };
 
-  FirebaseMessaging.onBackgroundMessage(
-    firebaseMessagingBackgroundHandler,
-  );
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   /// Commands for running easy localization and generating code
   /// flutter pub run easy_localization:generate -o codegen_loader.g.dart -S lib/assets/strings

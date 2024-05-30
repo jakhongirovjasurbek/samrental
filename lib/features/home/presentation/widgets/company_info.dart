@@ -54,7 +54,7 @@ class CompanyItem extends StatelessWidget {
                   SvgPicture.asset(AppIcons.location),
                   const Gap(8),
                   Text(
-                    'Alisher Navoiy 112',
+                    'Alisher Navoiy 30',
                     style: Theme.of(context).textTheme.bodyLarge,
                   )
                 ],

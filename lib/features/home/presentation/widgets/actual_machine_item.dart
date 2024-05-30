@@ -129,7 +129,7 @@ class _ActualMachineItemState extends State<ActualMachineItem> {
                         SvgPicture.asset(AppIcons.location),
                         const Gap(6),
                         Text(
-                          'Alisher Navoiy 112',
+                          'Alisher Navoiy 30',
                           style: context.textStyle.fontSize15FontWeight400
                               .copyWith(
                             color: headlineMediumTextColor.withOpacity(.5),
